@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Spotitube</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
   </head>
-  <body>
+  <body class="body">
     <h1>Spotitube (TITLE WIP)</h1>
     <form id="search-form" class="form-inline mt-4">
       <input type="text" id="searchbar" placeholder="Search Here!" />
@@ -20,7 +23,29 @@
     <hr />
 
     <div id="results">
-      <h2>Results: </h2>
+      <h2>Results:</h2>
+    </div>
+    <div class="modal" id="modal1">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <h1 id="modalTitle"></h1>
+        <p class= "image is-16by9">
+          <iframe
+            id="player"
+            type="text/html"
+            width="640"
+            height="390"
+            src=""
+            frameborder="0"
+            class="m-4"
+          ></iframe>
+        </p>
+        <footer class="">
+          <button onclick="closeModal();" class="button is-danger">
+            Close
+          </button>
+        </footer>
+      </div>
     </div>
     <script src="assets/js/youtube.js"></script>
   </body>
