@@ -90,7 +90,7 @@ function showResults(data) {
       modalTitle.innerHTML = videoTitle;
 
       var ytplayer = document.querySelector("#player");
-      ytplayer.setAttribute("src", "http://www.youtube.com/embed/" + videoId);
+      ytplayer.setAttribute("src", "https://www.youtube.com/embed/" + videoId);
 
       var tag = document.createElement("script");
 
