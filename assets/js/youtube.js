@@ -2,6 +2,13 @@ var searchInput = document.querySelector("#searchbar");
 var searchBtn = document.querySelector("#startButton");
 var searchForm = document.querySelector("#search-form");
 var results = document.querySelector("#results");
+var dropdown = document.querySelector('.dropdown');
+
+dropdown.addEventListener('click', function(event) {
+  event.stopPropagation();
+  dropdown.classList.toggle('is-active');
+});
+
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -17,13 +24,6 @@ searchForm.addEventListener("submit", (event) => {
   } else {
     alert("Please enter a valid search!");
   }
-});
-
-
-var dropdown = document.querySelector('.dropdown');
-dropdown.addEventListener('click', function(event) {
-  event.stopPropagation();
-  dropdown.classList.toggle('is-active');
 });
 
 function saveSearch(input) {
