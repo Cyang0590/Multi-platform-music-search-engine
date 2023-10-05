@@ -2,6 +2,13 @@ var searchInput = document.querySelector("#searchbar");
 var searchBtn = document.querySelector("#startButton");
 var searchForm = document.querySelector("#search-form");
 var results = document.querySelector("#results");
+var dropdown = document.querySelector('.dropdown');
+
+dropdown.addEventListener('click', function(event) {
+  event.stopPropagation();
+  dropdown.classList.toggle('is-active');
+});
+
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -9,6 +16,7 @@ searchForm.addEventListener("submit", (event) => {
   var searchQuery = searchInput.value.trim();
 
   if (searchQuery) {
+    saveSearch(searchQuery)
     getSearchResults(searchQuery);
 
     searchInput.value = "";
@@ -17,6 +25,33 @@ searchForm.addEventListener("submit", (event) => {
     alert("Please enter a valid search!");
   }
 });
+
+function saveSearch(input) {
+  var searchHistory = localStorage.getItem("searchHistory");
+
+  searchHistory = searchHistory ? JSON.parse(searchHistory) : [];
+
+  var existingSearchIndex = searchHistory.findIndex(
+    (search) => search.toLowerCase() === input.toLowerCase()
+  );
+
+  if (existingSearchIndex >= 0) {
+    searchHistory.splice(existingSearchIndex, 1);
+  }
+
+  var firstLetter = input.charAt(0);
+  var firstLetterCap = firstLetter.toUpperCase();
+  var remainingLetters = input.slice(1);
+  var capitalizeWord = firstLetterCap + remainingLetters;
+  searchHistory.push(capitalizeWord);
+
+  if (searchHistory.length > 10) {
+    searchHistory.shift();
+  }
+
+  localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+}
+
 
 function getSearchResults(input) {
   var apiUrl =
