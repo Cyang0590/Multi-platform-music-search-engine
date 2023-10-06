@@ -95,27 +95,34 @@
 
     <div class="modal" id="modal1">
       <div class="modal-background"></div>
-      <div class="modal-content">
-        <h1 id="modalTitle"></h1>
-        <p class="image is-16by9">
-          <iframe
-            id="player"
-            type="text/html"
-            width="640"
-            height="390"
-            src=""
-            frameborder="0"
-            class="m-4"
-          ></iframe>
-        </p>
-        <footer class="">
-          <button onclick="closeModal();" class="button is-danger">
-            Close
-          </button>
+      <div class="modal-card" style="width: 70%;">
+        <header class="modal-card-head">
+          <p class="modal-card-title has-text-centered" id="modalTitle">Modal Title</p>
+        </header>
+        <section class="modal-card-body">
+          <div class="content">
+            <div class="columns is-centered">
+              <div class="column is-flex is-justify-content-center is-align-items-center">
+                <div class="image">
+                  <iframe
+                    id="player"
+                    type="text/html"
+                    width="640"
+                    height="390"
+                    src=""
+                    frameborder="0"
+                  ></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <footer class="modal-card-foot is-flex is-justify-content-center is-align-items-center">
+          <button class="button is-danger" onclick="closeModal()">Close</button>
         </footer>
       </div>
     </div>
-
+    
     <div class="modal" id="modal2">
       <div class="modal-background"></div>
         <section class="modal-content">
