@@ -20,7 +20,7 @@ searchFormEl.addEventListener("submit", (event) => {
   if (searchQueryEl) {
     retreiveToken(searchQueryEl);
   }
-  
+
 });
 
 async function retreiveToken(input) {
@@ -58,11 +58,10 @@ async function retreiveToken(input) {
 async function retreiveKeyPlaylist(access_token, input) {
   console.log(input)
   const result = await fetch(`https://api.spotify.com/v1/search?type=track,artist&q=` + input, {
-    // const result = await fetch(`https://api.spotify.com/v1/search?q=name:` + searchInput + `%20artist:` + searchInput + `&type=track&limit=10`, {
-    // method: "GET",
+    method: "GET",
     headers: {
       Authorization: `Bearer ` + access_token
-      
+
     }
   })
   const data = await result.json();
@@ -71,58 +70,61 @@ async function retreiveKeyPlaylist(access_token, input) {
   console.log(data)
 };
 
+
 function displayResult(data) {
   data.tracks.items.forEach((searchResults) => {
 
-    for(i=0; i<20; i++) {
+    for (i = 0; i < 20; i++) {
       var artistName = data.tracks.items[i].artists[0].name;
       var trackName = data.tracks.items[i].name;
       var trackImage = data.tracks.items[i].album.images[2].url
-      var trackUrl = data.tracks.items[i].href
+      var trackUrl = data.tracks.items[i].external_urls.spotify
+
+      // console.log(data.tracks.items[i].href)
 
       var article = document.createElement("article");
       article.classList.add("media");
       article.style.cursor = "pointer";
-  
-      var thumbnailEl = document.createElement("figure");
+
+      var thumbnailEl = document.createElement("div");
       thumbnailEl.classList.add("media-right");
-  
+
       var thumbnailImg = document.createElement("p");
       thumbnailImg.classList.add("image", "is-64x64");
-  
+
       var thumbnail = document.createElement("img");
       thumbnail.setAttribute("src", trackImage);
-  
+
       var mediaContent = document.createElement("div");
       mediaContent.classList.add("media-content");
-  
+
       var content = document.createElement("div");
       content.classList.add("content");
-    // console.log(data.tracks.items[i].album.images[2])
+      // console.log(data.tracks.items[i].album.images[2])
 
-    var MusicInfo = document.createElement("p");
-    MusicInfo.innerHTML =
-      "<strong>" + artistName + "</strong>" + "<br />" + trackName;
+      var MusicInfo = document.createElement("p");
+      MusicInfo.innerHTML =
+        "<strong>" + trackName + "</strong>" + "<br />" + artistName;
 
       resultsEl.appendChild(article);
+      article.appendChild(thumbnailEl);
+      thumbnailEl.appendChild(thumbnailImg);
+      thumbnailImg.appendChild(thumbnail);
 
-    article.appendChild(thumbnailEl);
-    thumbnailEl.appendChild(thumbnailImg);
-    thumbnailImg.appendChild(thumbnail);
+      article.appendChild(mediaContent);
+      mediaContent.appendChild(content);
+      content.appendChild(MusicInfo);
 
-    article.appendChild(mediaContent);
-    mediaContent.appendChild(content);
-    content.appendChild(MusicInfo);
+      article.addEventListener("click", function () {
+
+        console.log(trackUrl);
+
+        return window.location.href= trackUrl
+      })
 
     }
-    
-   
 
-
-
-  }
-  
-  )
+  })
 }
 
 
