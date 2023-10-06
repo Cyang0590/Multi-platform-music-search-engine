@@ -74,9 +74,14 @@ function displaySearchHistory() {
       if (youtubeSelector.checked) {
         var selectedGenre = selectElement.value;
         getSearchResults(search, selectedGenre);
-        searchInput.value = "";
         results.innerHTML = "";
+      } else if (spotifySelector.checked) {
+        console.log("No youtube selected");
+      } else {
+        document.getElementById("modal2").classList.add("is-active");
+        errorText.textContent = "Please Select a Platform!";
       }
+      searchInput.value = "";
     });
     searchHistorySection.appendChild(listItem);
   });
