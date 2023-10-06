@@ -122,14 +122,10 @@ function showResults(data) {
     var content = document.createElement("div");
     content.classList.add("content");
 
-    // var resultsEl = document.createElement("a");
-    // resultsEl.setAttribute("href", videoUrl);
-
     var videoInfo = document.createElement("p");
     videoInfo.innerHTML =
       "<strong>" + videoTitle + "</strong>" + "<br />" + videoDescription;
 
-    // results.appendChild(resultsEl);
     results.appendChild(article);
 
     article.appendChild(thumbnailEl);

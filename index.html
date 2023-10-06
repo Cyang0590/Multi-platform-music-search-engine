@@ -7,16 +7,14 @@
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
-      rel="stylesheet"
-      href="assets/js/assets.css"
     />
-    <link rel="stylesheet" href="assets/js/assets.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
   </head>
   <body class="body" class="columns is-desktop">
     <h1 class="title is-1 has-background-danger-dark" class="column">
       Spotitube (TITLE WIP)
     </h1>
-    <img src="assets/js/Joe Logo.png" class="image is-128x128" class="column" />
+    <img src="assets/images/logo.png" class="image is-128x128" class="column" />
     <form id="search-form" class="form-inline mt-4">
       <input type="text" id="searchbar" placeholder="Search Here!" />
       <button type="submit" class="btn btn-primary">Search</button>
@@ -31,7 +29,7 @@
       <input type="radio" id="spotify" name="platform" value="Spotify" />
       <label for="soundcloud" class="button has-background-success"
         >Spotify</label
-    ><br />
+      ><br />
       <div class="select">
         <select>
           <option value="%2Fm%2F04rlf">Filter genre:</option>
@@ -59,12 +57,9 @@
     </section>
     <hr />
 
-    <br />
-    <br />
-    <br />
-    <div id="results" class="color">
-      <h2>Results:</h2>
-    </div>
+    <h2>Results:</h2>
+    <div id="results" class="color"></div>
+
     <div class="modal" id="modal1">
       <div class="modal-background"></div>
       <div class="modal-content">
@@ -92,9 +87,8 @@
       src="https://kit.fontawesome.com/9c390b5156.js"
       crossorigin="anonymous"
     ></script>
-    
 
     <script src="assets/js/spotify.js"></script>
-    <script src="assets/js/youtube.js"></script>    
+    <script src="assets/js/youtube.js"></script>
   </body>
 </html>
