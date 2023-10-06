@@ -4,7 +4,9 @@ var searchForm = document.querySelector("#search-form");
 var results = document.querySelector("#results");
 var searchHistorySection = document.getElementById("search-history");
 var selectElement = document.querySelector("select");
+var errorText = document.querySelector("#errorText");
 var youtubeSelector = document.querySelector("#youtube");
+var spotifySelector = document.querySelector("#spotify");
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -16,6 +18,11 @@ searchForm.addEventListener("submit", (event) => {
     if (youtubeSelector.checked) {
       getSearchResults(searchQuery, selectedGenre);
       results.innerHTML = "";
+    } else if (spotifySelector.checked) {
+      console.log("No youtube selected");
+    } else {
+      document.getElementById("modal2").classList.add("is-active");
+      errorText.textContent = "Please Select a Platform!";
     }
     saveSearch(searchQuery);
     displaySearchHistory();
