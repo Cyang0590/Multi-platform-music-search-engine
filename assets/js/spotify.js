@@ -2,6 +2,7 @@ var searchInputEl = document.querySelector("#searchbar");
 var searchBtnEl = document.querySelector("#startButton");
 var searchFormEl = document.querySelector("#search-form");
 var spotifySelectEl = document.querySelector("#spotify")
+var youtubeSelectEl = document.querySelector("#youtube");
 var resultsEl = document.querySelector("#spotifyResults");
 
 
@@ -11,6 +12,7 @@ var clientSecret = "798793c082c84d74a10e63bb7d6d604a"
 
 var Url = "https://accounts.spotify.com/api/token"
 
+var searchHistory = localStorage.getItem("searchHistory");
 
 
 searchFormEl.addEventListener("submit", (event) => {
@@ -76,7 +78,6 @@ async function retreiveKeyPlaylist(access_token, input) {
 
 
 function displayResult(data) {
-  data.tracks.items.forEach((searchResults) => {
 
     for (i = 0; i < 20; i++) {
       var artistName = data.tracks.items[i].artists[0].name;
@@ -128,8 +129,8 @@ function displayResult(data) {
 
     }
 
-  })
-}
+  }
+
 
 
 
