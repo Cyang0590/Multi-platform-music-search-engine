@@ -7,112 +7,59 @@
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
-     rel="stylesheet" href="assets/js/assets.css"
-
     />
-    <link rel="stylesheet" href="assets/js/assets.css"/>
+    <link rel="stylesheet" href="assets/css/style.css" />
   </head>
   <body class="body" class="columns is-desktop">
-    <h1 class="title is-1 has-background-danger-dark" class="column">Spotitube (TITLE WIP)</h1>
-    <img src="assets/js/Joe Logo.png" class="image is-128x128" class="column">
+    <h1 class="title is-1 has-background-danger-dark" class="column">
+      Spotitube (TITLE WIP)
+    </h1>
+    <img src="assets/images/logo.png" class="image is-128x128" class="column" />
     <form id="search-form" class="form-inline mt-4">
       <input type="text" id="searchbar" placeholder="Search Here!" />
       <button type="submit" class="btn btn-primary">Search</button>
       <p>Choose a Platform</p>
       <input type="radio" id="youtube" name="platform" value="YouTube" />
-      <label Id=youtubeButton for="youtube" class="button has-background-danger-dark has-text-white">YouTube</label><br />
+      <label
+        id="youtubeButton"
+        for="youtube"
+        class="button has-background-danger-dark has-text-white"
+        >YouTube</label
+      ><br />
       <input type="radio" id="spotify" name="platform" value="Spotify" />
-      <label for="soundcloud" class="button has-background-success">Spotify</label><br />
+      <label for="soundcloud" class="button has-background-success"
+        >Spotify</label
+      ><br />
+      <div class="select">
+        <select>
+          <option value="%2Fm%2F04rlf">Filter genre:</option>
+          <option value="%2Fm%2F02mscn">Christian</option>
+          <option value="%2Fm%2F0ggq0m">Classical</option>
+          <option value="%2Fm%2F01lyv">Country</option>
+          <option value="%2Fm%2F02lkt">Electronic</option>
+          <option value="%2Fm%2F0glt670">Hip-Hop</option>
+          <option value="%2Fm%2F05rwpb">Indie</option>
+          <option value="%2Fm%2F03_d0">Jazz</option>
+          <option value="%2Fm%2F028sqc">K-Pop</option>
+          <option value="%2Fm%2F0g293">Latin</option>
+          <option value="%2Fm%2F064t9">Pop</option>
+          <option value="%2Fm%2F06cqb">Reggae</option>
+          <option value="%2Fm%2F06j6l">Rhythm and Blues</option>
+          <option value="%2Fm%2F06by7">Rock</option>
+          <option value="%2Fm%2F0gywn">Soul</option>
+        </select>
+      </div>
     </form>
 
-    <div class="dropdown is-none">
-      <div class="dropdown-trigger">
-        <button
-          class="button"
-          aria-haspopup="true"
-          aria-controls="dropdown-menu"
-        >
-          <span>Select genres to filter your search</span>
-          <span class="icon is-small">
-            <i class="fas fa-angle-down mt-1" aria-hidden="true"></i>
-          </span>
-        </button>
-      </div>
-      <div class="dropdown-menu" id="dropdown-menu" role="menu">
-        <div class="dropdown-content">
-          <label class="checkbox dropdown-item">
-            <input type="checkbox" />
-            Christian
-          </label>
-          <label class="checkbox dropdown-item">
-            <input type="checkbox" />
-            Classical
-          </label>
-          <label class="checkbox dropdown-item">
-            <input type="checkbox" />
-            Country
-          </label>
-          <label class="checkbox dropdown-item">
-            <input type="checkbox" />
-            Electronic
-          </label>
-          <label class="checkbox dropdown-item">
-            <input type="checkbox" />
-            Hip-Hop
-          </label>
-          <label class="checkbox dropdown-item">
-            <input type="checkbox" />
-            Indie
-          </label>
-          <label class="checkbox dropdown-item">
-            <input type="checkbox" />
-            Jazz
-          </label>
-          <label class="checkbox dropdown-item">
-            <input type="checkbox" />
-            K-pop
-          </label>
-          <label class="checkbox dropdown-item">
-            <input type="checkbox" />
-            Latin
-          </label>
-          <label class="checkbox dropdown-item">
-            <input type="checkbox" />
-            Pop
-          </label>
-          <label class="checkbox dropdown-item">
-            <input type="checkbox" />
-            Reggae
-          </label>
-          <label class="checkbox dropdown-item">
-            <input type="checkbox" />
-            Rhythm and Blues
-          </label>
-          <label class="checkbox dropdown-item">
-            <input type="checkbox" />
-            Rock
-          </label>
-          <label class="checkbox dropdown-item">
-            <input type="checkbox" />
-            Soul
-          </label>
-        </div>
-      </div>
-    </div>
     <section class="menu">
       <p class="menu-label">Search History</p>
       <ul id="search-history" class="menu-list"></ul>
     </section>
     <hr />
 
+    <h2>Results:</h2>
+    <div id="results" class="color"></div>
 
-    <br>
-    <br>
-    <br>
-    <div id="results" class="color">
-
-      <h2>Results:</h2>
-    </div>
     <div class="modal" id="modal1">
       <div class="modal-background"></div>
       <div class="modal-content">
@@ -136,14 +83,12 @@
       </div>
     </div>
 
-
     <script
       src="https://kit.fontawesome.com/9c390b5156.js"
       crossorigin="anonymous"
     ></script>
-    
 
     <script src="assets/js/spotify.js"></script>
-    <script src="assets/js/youtube.js"></script>    
+    <script src="assets/js/youtube.js"></script>
   </body>
 </html>
