@@ -1,6 +1,7 @@
 var searchInputEl = document.querySelector("#searchbar");
 var searchBtnEl = document.querySelector("#startButton");
 var searchFormEl = document.querySelector("#search-form");
+var spotifySelectEl = document.querySelector("#spotify")
 var resultsEl = document.querySelector("#spotifyResults");
 
 
@@ -14,11 +15,14 @@ var Url = "https://accounts.spotify.com/api/token"
 
 searchFormEl.addEventListener("submit", (event) => {
   event.preventDefault();
-
+  
   var searchQueryEl = searchInputEl.value.trim();
 
-  if (searchQueryEl) {
+  if (spotifySelectEl.checked) {
     retreiveToken(searchQueryEl);
+    resultsEl.innerHTML = "";
+  } else {
+    return;
   }
 
 });
