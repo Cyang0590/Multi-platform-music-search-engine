@@ -28,7 +28,8 @@ searchForm.addEventListener("submit", (event) => {
     displaySearchHistory();
     searchInput.value = "";
   } else {
-    alert("Please enter a valid search!");
+    document.getElementById("modal2").classList.add("is-active");
+    errorText.textContent = "Please Enter a Valid Search!";
   }
 });
 
@@ -125,7 +126,7 @@ function showResults(data) {
 
     var thumbnail = document.createElement("img");
     thumbnail.setAttribute("src", thumbnailUrl);
-    thumbnail.style.height = "64px"
+    thumbnail.style.height = "64px";
 
     var mediaContent = document.createElement("div");
     mediaContent.classList.add("media-content");
@@ -134,7 +135,7 @@ function showResults(data) {
     content.classList.add("content", "is-flex");
 
     var videoInfo = document.createElement("p");
-    videoInfo.classList.add("is-clipped", "is-size-6", "video-description");
+    videoInfo.classList.add("is-clipped", "is-size-6", "media-description");
     videoInfo.innerHTML =
       "<strong>" + videoTitle + "</strong>" + "<br />" + videoDescription;
 

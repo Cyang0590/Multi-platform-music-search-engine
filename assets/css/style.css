@@ -8,7 +8,7 @@
   margin-right: 0.5rem;
 }
 
-.video-description {
+.media-description {
   display: -webkit-box;
   -webkit-line-clamp: 2; /* Limit the number of lines to 2 */
   -webkit-box-orient: vertical;

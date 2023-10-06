@@ -1,7 +1,7 @@
 var searchInputEl = document.querySelector("#searchbar");
 var searchBtnEl = document.querySelector("#startButton");
 var searchFormEl = document.querySelector("#search-form");
-var spotifySelectEl = document.querySelector("#spotify")
+var spotifySelectEl = document.querySelector("#spotify");
 var youtubeSelectEl = document.querySelector("#youtube");
 var resultsEl = document.querySelector("#spotifyResults");
 var selectElement = document.querySelector("select");
@@ -9,25 +9,32 @@ var selectElement = document.querySelector("select");
 var clientId = "2383905db5474844bcb1768d0aa73893";
 var clientSecret = "798793c082c84d74a10e63bb7d6d604a";
 
-var Url = "https://accounts.spotify.com/api/token"
-
 var searchHistory = localStorage.getItem("searchHistory");
 
+var Url = "https://accounts.spotify.com/api/token";
 
 searchFormEl.addEventListener("submit", (event) => {
   event.preventDefault();
-  
+
   var searchQueryEl = searchInputEl.value.trim();
 
   const selectedOption = selectElement.options[selectElement.selectedIndex];
   const selectedGenreData = selectedOption.getAttribute("data-genre");
   console.log(selectedGenreData);
 
-  if (spotifySelectEl.checked) {
-    retreiveToken(searchQueryEl);
-    resultsEl.innerHTML = "";
+  if (searchQueryEl) {
+    if (spotifySelectEl.checked) {
+      retreiveToken(searchQueryEl, selectedGenreData);
+      resultsEl.innerHTML = "";
+    } else if (youtubeSelectEl.checked) {
+      return;
+    } else {
+      document.getElementById("modal2").classList.add("is-active");
+      errorText.textContent = "Please Select a Platform!";
+    }
   } else {
-    return;
+    document.getElementById("modal2").classList.add("is-active");
+    errorText.textContent = "Please Select a Platform!";
   }
 });
 
@@ -82,61 +89,60 @@ async function retreiveKeyPlaylist(access_token, input, genre) {
 }
 
 function displayResult(data) {
+  for (i = 0; i < 20; i++) {
+    var artistName = data.tracks.items[i].artists[0].name;
+    var trackName = data.tracks.items[i].name;
+    var trackImage = data.tracks.items[i].album.images[2].url;
+    var trackUrl = data.tracks.items[i].external_urls.spotify;
 
-    for (i = 0; i < 20; i++) {
-      var artistName = data.tracks.items[i].artists[0].name;
-      var trackName = data.tracks.items[i].name;
-      var trackImage = data.tracks.items[i].album.images[2].url;
-      var trackUrl = data.tracks.items[i].external_urls.spotify;
+    // console.log(data.tracks.items[i].href)
 
-      // console.log(data.tracks.items[i].href)
+    var article = document.createElement("article");
+    article.classList.add("media");
+    article.style.cursor = "pointer";
 
-      var article = document.createElement("article");
-      article.classList.add("media");
-      article.style.cursor = "pointer";
+    var thumbnailEl = document.createElement("div");
+    thumbnailEl.classList.add("media-right");
 
-      var thumbnailEl = document.createElement("div");
-      thumbnailEl.classList.add("media-right");
+    var thumbnailImg = document.createElement("p");
+    thumbnailImg.classList.add("image", "is-64x64");
 
-      var thumbnailImg = document.createElement("p");
-      thumbnailImg.classList.add("image", "is-64x64");
+    var thumbnail = document.createElement("img");
+    thumbnail.setAttribute("src", trackImage);
 
-      var thumbnail = document.createElement("img");
-      thumbnail.setAttribute("src", trackImage);
+    var mediaContent = document.createElement("div");
+    mediaContent.classList.add("media-content");
 
-      var mediaContent = document.createElement("div");
-      mediaContent.classList.add("media-content");
+    var content = document.createElement("div");
+    content.classList.add("content", "has-text-right");
+    // console.log(data.tracks.items[i].album.images[2])
 
-      var content = document.createElement("div");
-      content.classList.add("content", "has-text-right");
-      // console.log(data.tracks.items[i].album.images[2])
+    var MusicInfo = document.createElement("p");
+    MusicInfo.classList.add("is-pulled-right", "media-description");
 
-      var MusicInfo = document.createElement("p");
-      MusicInfo.classList.add("is-pulled-right");
+    MusicInfo.innerHTML =
+      "<strong>" +
+      trackName +
+      "</strong>" +
+      "<br />" +
+      "<span class='is-align-items-end'>" +
+      artistName +
+      "</span>";
 
-      MusicInfo.innerHTML =
-        "<strong>" + trackName + "</strong>" + "<br />" + "<span class='is-align-items-end'>" + artistName + "</span>";
+    article.appendChild(mediaContent);
+    mediaContent.appendChild(content);
+    content.appendChild(MusicInfo);
+    // content.appendChild(musicArtist);
 
-      article.appendChild(mediaContent);
-      mediaContent.appendChild(content);
-      content.appendChild(MusicInfo);
-      // content.appendChild(musicArtist);
+    resultsEl.appendChild(article);
+    article.appendChild(thumbnailEl);
+    thumbnailEl.appendChild(thumbnailImg);
+    thumbnailImg.appendChild(thumbnail);
 
-      resultsEl.appendChild(article);
-      article.appendChild(thumbnailEl);
-      thumbnailEl.appendChild(thumbnailImg);
-      thumbnailImg.appendChild(thumbnail);
+    article.addEventListener("click", function () {
+      console.log(trackUrl);
 
-      article.addEventListener("click", function () {
-        console.log(trackUrl);
-
-        return (window.location.href = trackUrl);
-      });
-    }
-
+      return (window.location.href = trackUrl);
+    });
   }
-
-
-
-
-
+}
