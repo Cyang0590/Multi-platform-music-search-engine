@@ -121,18 +121,20 @@ function showResults(data) {
     thumbnailEl.classList.add("media-left");
 
     var thumbnailImg = document.createElement("p");
-    thumbnailImg.classList.add("image", "is-64x64");
+    thumbnailImg.classList.add("image", "is-flex", "is-align-items-center");
 
     var thumbnail = document.createElement("img");
     thumbnail.setAttribute("src", thumbnailUrl);
+    thumbnail.style.height = "64px"
 
     var mediaContent = document.createElement("div");
     mediaContent.classList.add("media-content");
 
     var content = document.createElement("div");
-    content.classList.add("content");
+    content.classList.add("content", "is-flex");
 
     var videoInfo = document.createElement("p");
+    videoInfo.classList.add("is-clipped", "is-size-6", "video-description");
     videoInfo.innerHTML =
       "<strong>" + videoTitle + "</strong>" + "<br />" + videoDescription;
 
