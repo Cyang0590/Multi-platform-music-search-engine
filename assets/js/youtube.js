@@ -2,6 +2,7 @@ var searchInput = document.querySelector("#searchbar");
 var searchBtn = document.querySelector("#startButton");
 var searchForm = document.querySelector("#search-form");
 var results = document.querySelector("#results");
+var searchHistorySection = document.getElementById("search-history");
 var dropdown = document.querySelector('.dropdown');
 
 dropdown.addEventListener('click', function(event) {
@@ -18,6 +19,7 @@ searchForm.addEventListener("submit", (event) => {
   if (searchQuery) {
     saveSearch(searchQuery)
     getSearchResults(searchQuery);
+    displaySearchHistory();
 
     searchInput.value = "";
     results.innerHTML = "";
@@ -52,6 +54,24 @@ function saveSearch(input) {
   localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
 }
 
+function displaySearchHistory() {
+  var searchHistory = localStorage.getItem("searchHistory");
+
+  searchHistory = searchHistory ? JSON.parse(searchHistory) : [];
+
+  searchHistorySection.innerHTML = "";
+
+  searchHistory.forEach((search) => {
+    var listItem = document.createElement("li");
+    listItem.classList.add("menu-list");
+    listItem.style.cursor = "pointer";
+    listItem.innerHTML = "<a>" + search + "</a>";
+    listItem.addEventListener("click", () => {
+      getLocationCoords(search);
+    });
+    searchHistorySection.appendChild(listItem);
+  });
+}
 
 function getSearchResults(input) {
   var apiUrl =

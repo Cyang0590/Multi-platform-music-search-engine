@@ -20,50 +20,87 @@
       <input type="radio" id="spotify" name="platform" value="Spotify" />
       <label for="soundcloud">Spotify</label><br />
     </form>
-    <hr />
 
-    <div class="dropdown is-active">
+    <div class="dropdown is-none">
       <div class="dropdown-trigger">
-        <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-          <span>Dropdown button</span>
+        <button
+          class="button"
+          aria-haspopup="true"
+          aria-controls="dropdown-menu"
+        >
+          <span>Select genres to filter your search</span>
           <span class="icon is-small">
-            <i class="fas fa-angle-down" aria-hidden="true"></i>
+            <i class="fas fa-angle-down mt-1" aria-hidden="true"></i>
           </span>
         </button>
       </div>
       <div class="dropdown-menu" id="dropdown-menu" role="menu">
-        <ul class="dropdown-content"> 
-          <li class="dropdown-item, checkbox,">Christian</li>
-          <input type="checkbox">
-          <li class="dropdown-item, checkbox, ">Classical</li>
-          <input type="checkbox">            
-          <li class="dropdown-item, checkbox,">Country</li>
-          <input type="checkbox"> 
-          <li class="dropdown-item, checkbox,">Electronic</li>
-          <input type="checkbox">
-          <li class="dropdown-item, checkbox,">Hip-Hop</li>
-          <input type="checkbox">
-          <li class="dropdown-item, checkbox,">Independant/Indie</li>
-          <input type="checkbox">
-          <li class="dropdown-item, checkbox,">Jazz</li>
-          <input type="checkbox">
-          <li class="dropdown-item, checkbox,">Asian Music/K-Pop</li>
-          <input type="checkbox">
-          <li class="dropdown-item, checkbox,">Latin Music</li>
-          <input type="checkbox">
-          <li class="dropdown-item, checkbox,">Pop</li>
-          <input type="checkbox">
-          <li class="dropdown-item, checkbox,">Reggae</li>
-          <input type="checkbox">
-          <li class="dropdown-item, checkbox,">Rythym and Blues</li>
-          <input type="checkbox">
-          <li class="dropdown-item, checkbox,">Rock</li>
-          <input type="checkbox">
-          <li class="dropdown-item, checkbox,">Soul</li>
-          <input type="checkbox"> 
-        </ul>
+        <div class="dropdown-content">
+          <label class="checkbox dropdown-item">
+            <input type="checkbox" />
+            Christian
+          </label>
+          <label class="checkbox dropdown-item">
+            <input type="checkbox" />
+            Classical
+          </label>
+          <label class="checkbox dropdown-item">
+            <input type="checkbox" />
+            Country
+          </label>
+          <label class="checkbox dropdown-item">
+            <input type="checkbox" />
+            Electronic
+          </label>
+          <label class="checkbox dropdown-item">
+            <input type="checkbox" />
+            Hip-Hop
+          </label>
+          <label class="checkbox dropdown-item">
+            <input type="checkbox" />
+            Indie
+          </label>
+          <label class="checkbox dropdown-item">
+            <input type="checkbox" />
+            Jazz
+          </label>
+          <label class="checkbox dropdown-item">
+            <input type="checkbox" />
+            K-pop
+          </label>
+          <label class="checkbox dropdown-item">
+            <input type="checkbox" />
+            Latin
+          </label>
+          <label class="checkbox dropdown-item">
+            <input type="checkbox" />
+            Pop
+          </label>
+          <label class="checkbox dropdown-item">
+            <input type="checkbox" />
+            Reggae
+          </label>
+          <label class="checkbox dropdown-item">
+            <input type="checkbox" />
+            Rhythm and Blues
+          </label>
+          <label class="checkbox dropdown-item">
+            <input type="checkbox" />
+            Rock
+          </label>
+          <label class="checkbox dropdown-item">
+            <input type="checkbox" />
+            Soul
+          </label>
+        </div>
       </div>
     </div>
+
+    <section class="menu">
+      <p class="menu-label">Search History</p>
+      <ul id="search-history" class="menu-list"></ul>
+    </section>
+    <hr />
 
     <div id="results">
       <h2>Results:</h2>
@@ -72,7 +109,7 @@
       <div class="modal-background"></div>
       <div class="modal-content">
         <h1 id="modalTitle"></h1>
-        <p class= "image is-16by9">
+        <p class="image is-16by9">
           <iframe
             id="player"
             type="text/html"
@@ -90,6 +127,10 @@
         </footer>
       </div>
     </div>
+    <script
+      src="https://kit.fontawesome.com/9c390b5156.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="assets/js/youtube.js"></script>
     <script src="assets/js/spotify.js"></script>
   </body>
