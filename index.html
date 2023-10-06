@@ -10,55 +10,88 @@
     />
     <link rel="stylesheet" href="assets/css/style.css" />
   </head>
-  <body class="body" class="columns is-desktop">
-    <h1 class="title is-1 has-background-danger-dark" class="column">
-      Spotitube (TITLE WIP)
-    </h1>
-    <img src="assets/images/logo.png" class="image is-128x128" class="column" />
-    <form id="search-form" class="form-inline mt-4">
-      <input type="text" id="searchbar" placeholder="Search Here!" />
-      <button type="submit" class="btn btn-primary">Search</button>
-      <p>Choose a Platform</p>
-      <input type="radio" id="youtube" name="platform" value="YouTube" />
-      <label
-        id="youtubeButton"
-        for="youtube"
-        class="button has-background-danger-dark has-text-white"
-        >YouTube</label
-      ><br />
-      <input type="radio" id="spotify" name="platform" value="Spotify" />
-      <label for="soundcloud" class="button has-background-success"
-        >Spotify</label
-      ><br />
-      <div class="select">
-        <select>
-          <option value="%2Fm%2F04rlf">Filter genre:</option>
-          <option value="%2Fm%2F02mscn">Christian</option>
-          <option value="%2Fm%2F0ggq0m">Classical</option>
-          <option value="%2Fm%2F01lyv">Country</option>
-          <option value="%2Fm%2F02lkt">Electronic</option>
-          <option value="%2Fm%2F0glt670">Hip-Hop</option>
-          <option value="%2Fm%2F05rwpb">Indie</option>
-          <option value="%2Fm%2F03_d0">Jazz</option>
-          <option value="%2Fm%2F028sqc">K-Pop</option>
-          <option value="%2Fm%2F0g293">Latin</option>
-          <option value="%2Fm%2F064t9">Pop</option>
-          <option value="%2Fm%2F06cqb">Reggae</option>
-          <option value="%2Fm%2F06j6l">Rhythm and Blues</option>
-          <option value="%2Fm%2F06by7">Rock</option>
-          <option value="%2Fm%2F0gywn">Soul</option>
-        </select>
+  <body class="body">
+    <nav class="navbar is-danger" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <div>
+          <img src="assets/images/logo.png" class="image is-128x128" />
+        </div>
+        <a class="navbar-item" href="#">
+          <h1 class="title is-1 has-text-white">Spotitube (TITLE WIP)</h1>
+        </a>
       </div>
-    </form>
+    </nav>
 
-    <section class="menu">
-      <p class="menu-label">Search History</p>
-      <ul id="search-history" class="menu-list"></ul>
-    </section>
-    <hr />
+    <div class="container mt-4">
+      <div class="columns">
+        <div class="column is-one-third">
+          <form id="search-form">
+            <div class="field has-addons">
+              <div class="control is-expanded">
+                <input
+                  type="text"
+                  id="searchbar"
+                  class="input"
+                  placeholder="Search Here!"
+                />
+              </div>
+              <div class="control">
+                <button type="submit" class="button is-primary">Search</button>
+              </div>
+            </div>
+            <div class="field mt-4">
+              <label class="label">Choose a Platform</label>
+              <div class="control">
+                <label for="youtube" class="checkbox-label checkbox button has-background-danger-dark has-text-white">
+                  <input type="checkbox" id="youtube" name="platform" value="YouTube" />
+                  YouTube
+                </label>
+                <label for="spotify" class="checkbox-label checkbox button has-background-success has-text-white">
+                  <input type="checkbox" id="spotify" name="platform" value="Spotify" />
+                  Spotify
+                </label>
+              </div>
+            </div>
+            <div class="field mt-4">
+              <label class="label">Filter Genre</label>
+              <div class="control">
+                <div class="select">
+                  <div class="select">
+                    <select>
+                      <option value="%2Fm%2F04rlf">Filter genre:</option>
+                      <option value="%2Fm%2F02mscn">Christian</option>
+                      <option value="%2Fm%2F0ggq0m">Classical</option>
+                      <option value="%2Fm%2F01lyv">Country</option>
+                      <option value="%2Fm%2F02lkt">Electronic</option>
+                      <option value="%2Fm%2F0glt670">Hip-Hop</option>
+                      <option value="%2Fm%2F05rwpb">Indie</option>
+                      <option value="%2Fm%2F03_d0">Jazz</option>
+                      <option value="%2Fm%2F028sqc">K-Pop</option>
+                      <option value="%2Fm%2F0g293">Latin</option>
+                      <option value="%2Fm%2F064t9">Pop</option>
+                      <option value="%2Fm%2F06cqb">Reggae</option>
+                      <option value="%2Fm%2F06j6l">Rhythm and Blues</option>
+                      <option value="%2Fm%2F06by7">Rock</option>
+                      <option value="%2Fm%2F0gywn">Soul</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
 
-    <h2>Results:</h2>
-    <div id="results" class="color"></div>
+        <div class="column is-two-thirds">
+          <section class="menu">
+            <p class="menu-label">Search History</p>
+            <ul id="search-history" class="menu-list"></ul>
+          </section>
+          <hr />
+          <h2 class="mt-4">Results:</h2>
+          <div id="results" class="color"></div>
+        </div>
+      </div>
+    </div>
 
     <div class="modal" id="modal1">
       <div class="modal-background"></div>
@@ -87,8 +120,9 @@
       src="https://kit.fontawesome.com/9c390b5156.js"
       crossorigin="anonymous"
     ></script>
-
+    
     <script src="assets/js/spotify.js"></script>
     <script src="assets/js/youtube.js"></script>
+
   </body>
 </html>
