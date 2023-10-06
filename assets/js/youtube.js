@@ -3,35 +3,19 @@ var searchBtn = document.querySelector("#startButton");
 var searchForm = document.querySelector("#search-form");
 var results = document.querySelector("#results");
 var searchHistorySection = document.getElementById("search-history");
-var dropdown = document.querySelector('.dropdown');
-var checkboxes = document.querySelectorAll(".checkbox");
-var genres = [];
-
-dropdown.addEventListener('click', function(event) {
-  event.stopPropagation();
-  dropdown.classList.toggle('is-active');
-});
-
-checkboxes.forEach(box => {
-  box.addEventListener('click', (event) => {
-    console.log(event.target.value);
-    event.stopPropagation();
-
-    if (checkboxes.checked) {
-      var genreType = event.target.value
-      genres.push(genreType);
-    }
-  });
-});
+var selectElement = document.querySelector("select");
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
   var searchQuery = searchInput.value.trim();
 
+  var selectedGenre = selectElement.value;
+
+  console.log(selectedGenre);
   if (searchQuery) {
-    saveSearch(searchQuery)
-    getSearchResults(searchQuery);
+    saveSearch(searchQuery);
+    getSearchResults(searchQuery, selectedGenre);
     displaySearchHistory();
 
     searchInput.value = "";
@@ -80,23 +64,28 @@ function displaySearchHistory() {
     listItem.style.cursor = "pointer";
     listItem.innerHTML = "<a>" + search + "</a>";
     listItem.addEventListener("click", () => {
-      getLocationCoords(search);
+      var selectedGenre = selectElement.value;
+      getSearchResults(search, selectedGenre);
+      searchInput.value = "";
+      results.innerHTML = "";
     });
     searchHistorySection.appendChild(listItem);
   });
 }
 
-function getSearchResults(input) {
+function getSearchResults(input, genre) {
   var apiUrl =
     "https://www.googleapis.com/youtube/v3/search?q=" +
     input +
-    "&part=snippet" +
-    "&type=video&maxResults=20&key=AIzaSyCQJvOLH9jBWq_H_heswP8ew3OEFU99560";
+    "&part=snippet&type=video&maxResults=20&topicId=" +
+    genre +
+    "&key=AIzaSyCQJvOLH9jBWq_H_heswP8ew3OEFU99560";
 
   fetch(apiUrl).then(function (response) {
     if (response.ok) {
       response.json().then(function (data) {
         showResults(data);
+        console.log(apiUrl);
       });
     } else {
       alert("Error: " + response.statusText);
@@ -230,3 +219,5 @@ document.addEventListener("keydown", (event) => {
     closeModal();
   }
 });
+
+displaySearchHistory();
