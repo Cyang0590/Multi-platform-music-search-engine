@@ -1,21 +1,28 @@
 var searchInput = document.querySelector("#searchbar");
 var searchBtn = document.querySelector("#startButton");
 var searchForm = document.querySelector("#search-form");
-var results = document.querySelector("#results");
+var results = document.querySelector("#youtubeResults");
 var searchHistorySection = document.getElementById("search-history");
 var selectElement = document.querySelector("select");
+var errorText = document.querySelector("#errorText");
 var youtubeSelector = document.querySelector("#youtube");
+var spotifySelector = document.querySelector("#spotify");
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
   var searchQuery = searchInput.value.trim();
   var selectedGenre = selectElement.value;
-  
+
   if (searchQuery) {
     if (youtubeSelector.checked) {
       getSearchResults(searchQuery, selectedGenre);
       results.innerHTML = "";
+    } else if (spotifySelector.checked) {
+      console.log("No youtube selected");
+    } else {
+      document.getElementById("modal2").classList.add("is-active");
+      errorText.textContent = "Please Select a Platform!";
     }
     saveSearch(searchQuery);
     displaySearchHistory();
@@ -64,16 +71,23 @@ function displaySearchHistory() {
     listItem.style.cursor = "pointer";
     listItem.innerHTML = "<a>" + search + "</a>";
     listItem.addEventListener("click", () => {
-      var selectedGenre = selectElement.value;
-      getSearchResults(search, selectedGenre);
+      if (youtubeSelector.checked) {
+        var selectedGenre = selectElement.value;
+        getSearchResults(search, selectedGenre);
+        results.innerHTML = "";
+      } else if (spotifySelector.checked) {
+        console.log("No youtube selected");
+      } else {
+        document.getElementById("modal2").classList.add("is-active");
+        errorText.textContent = "Please Select a Platform!";
+      }
       searchInput.value = "";
-      results.innerHTML = "";
     });
     searchHistorySection.appendChild(listItem);
   });
 }
 
-function getSearchResults(input, genre) {
+async function getSearchResults(input, genre) {
   var apiUrl =
     "https://www.googleapis.com/youtube/v3/search?q=" +
     input +
@@ -81,20 +95,16 @@ function getSearchResults(input, genre) {
     genre +
     "&key=AIzaSyCQJvOLH9jBWq_H_heswP8ew3OEFU99560";
 
-  fetch(apiUrl).then(function (response) {
-    if (response.ok) {
-      response.json().then(function (data) {
-        showResults(data);
-        console.log(apiUrl);
-      });
-    } else {
-      alert("Error: " + response.statusText);
-    }
-  });
+  var response = await fetch(apiUrl);
+  if (response.status === 200) {
+    var data = await response.json();
+    showResults(data);
+  } else {
+    document.getElementById("modal2").classList.add("is-active");
+  }
 }
 
 function showResults(data) {
-  console.log(data);
   data.items.forEach((searchResults) => {
     var videoUrl =
       "https://www.youtube.com/watch?v=" + searchResults.id.videoId;
@@ -191,6 +201,7 @@ function showResults(data) {
 // Function to close the modal
 function closeModal() {
   document.getElementById("modal1").classList.remove("is-active");
+  document.getElementById("modal2").classList.remove("is-active");
 }
 
 // Add event listeners to close the modal

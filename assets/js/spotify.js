@@ -1,7 +1,7 @@
 var searchInputEl = document.querySelector("#searchbar");
 var searchBtnEl = document.querySelector("#startButton");
 var searchFormEl = document.querySelector("#search-form");
-var resultsEl = document.querySelector("#results");
+var resultsEl = document.querySelector("#spotifyResults");
 
 
 
