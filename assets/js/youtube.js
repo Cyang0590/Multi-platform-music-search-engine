@@ -4,22 +4,22 @@ var searchForm = document.querySelector("#search-form");
 var results = document.querySelector("#results");
 var searchHistorySection = document.getElementById("search-history");
 var selectElement = document.querySelector("select");
+var youtubeSelector = document.querySelector("#youtube");
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
   var searchQuery = searchInput.value.trim();
-
   var selectedGenre = selectElement.value;
-
-  console.log(selectedGenre);
+  
   if (searchQuery) {
+    if (youtubeSelector.checked) {
+      getSearchResults(searchQuery, selectedGenre);
+      results.innerHTML = "";
+    }
     saveSearch(searchQuery);
-    getSearchResults(searchQuery, selectedGenre);
     displaySearchHistory();
-
     searchInput.value = "";
-    results.innerHTML = "";
   } else {
     alert("Please enter a valid search!");
   }
