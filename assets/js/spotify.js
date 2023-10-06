@@ -1,26 +1,33 @@
 var searchInputEl = document.querySelector("#searchbar");
 var searchBtnEl = document.querySelector("#startButton");
 var searchFormEl = document.querySelector("#search-form");
+var spotifySelectEl = document.querySelector("#spotify")
+var youtubeSelectEl = document.querySelector("#youtube");
 var resultsEl = document.querySelector("#spotifyResults");
 var selectElement = document.querySelector("select");
 
 var clientId = "2383905db5474844bcb1768d0aa73893";
 var clientSecret = "798793c082c84d74a10e63bb7d6d604a";
 
-var Url = "https://accounts.spotify.com/api/token";
+var Url = "https://accounts.spotify.com/api/token"
+
+var searchHistory = localStorage.getItem("searchHistory");
+
 
 searchFormEl.addEventListener("submit", (event) => {
   event.preventDefault();
-
+  
   var searchQueryEl = searchInputEl.value.trim();
 
   const selectedOption = selectElement.options[selectElement.selectedIndex];
   const selectedGenreData = selectedOption.getAttribute("data-genre");
   console.log(selectedGenreData);
 
-  if (searchQueryEl) {
-    retreiveToken(searchQueryEl, selectedGenreData);
+  if (spotifySelectEl.checked) {
+    retreiveToken(searchQueryEl);
     resultsEl.innerHTML = "";
+  } else {
+    return;
   }
 });
 
@@ -75,8 +82,7 @@ async function retreiveKeyPlaylist(access_token, input, genre) {
 }
 
 function displayResult(data) {
-  console.log(data);
-  data.tracks.items.forEach((searchResults) => {
+
     for (i = 0; i < 20; i++) {
       var artistName = data.tracks.items[i].artists[0].name;
       var trackName = data.tracks.items[i].name;
@@ -127,5 +133,10 @@ function displayResult(data) {
         return (window.location.href = trackUrl);
       });
     }
-  });
-}
+
+  }
+
+
+
+
+
