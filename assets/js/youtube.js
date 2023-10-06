@@ -4,12 +4,25 @@ var searchForm = document.querySelector("#search-form");
 var results = document.querySelector("#results");
 var searchHistorySection = document.getElementById("search-history");
 var dropdown = document.querySelector('.dropdown');
+var checkboxes = document.querySelectorAll(".checkbox");
+var genres = [];
 
 dropdown.addEventListener('click', function(event) {
   event.stopPropagation();
   dropdown.classList.toggle('is-active');
 });
 
+checkboxes.forEach(box => {
+  box.addEventListener('click', (event) => {
+    console.log(event.target.value);
+    event.stopPropagation();
+
+    if (checkboxes.checked) {
+      var genreType = event.target.value
+      genres.push(genreType);
+    }
+  });
+});
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();

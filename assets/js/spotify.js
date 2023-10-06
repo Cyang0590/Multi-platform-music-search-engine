@@ -18,51 +18,63 @@ searchForm.addEventListener("submit", (event) => {
   var searchQuery = searchInput.value.trim();
 
   if (searchQuery) {
-    retreiveToken(searchQuery);
+    getToken(searchQuery);
 
-    searchInput.value = "";
-    results.innerHTML = "";
-    // } else {
-    //   alert("Please enter a valid search!");
+  } else {
+    alert("Please enter a valid search!");
   }
 });
 
-async function retreiveToken() {
-
-  const result = await fetch(Url, {
-    method: 'POST',
-    body: 'grant_type=client_credentials&client_id=' + clientId + '&client_secret=' + clientSecret,
+function getToken(input) {
+  fetch("https://accounts.spotify.com/api/token", {
+    method: "POST",
+    body:
+      "grant_type=client_credentials&client_id=" +
+      clientId +
+      "&client_secret=" +
+      clientSecret,
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  }).then(function (response) {
+    if (response.ok) {
+      response.json().then(function (data) {
+        var token = data.access_token;
+        console.log(token);
+        search(token, input);
+      });
+    } else {
+      alert("Error: " + response.statusText);
     }
-  })
-  const data = await result.json();
-  access_token = data.access_token;
-  retreiveKeyPlaylist(access_token)
-};
+  });
+}
 
+function search(token, input) {
+  var searchUrl =
+    "https://api.spotify.com/v1/search?type=album,track,artist&q=" + input;
 
-
-
-async function retreiveKeyPlaylist(access_token, searchInput) {
-
-  const result = await fetch(`https://api.spotify.com/v1/search?type=track,artist&q=` + searchInput, {
-    method: "GET",
+  fetch(searchUrl, {
     headers: {
-      Authorization: `Bearer ` + access_token
-
+      Authorization: "Bearer " + token,
+    },
+  }).then(function (response) {
+    if (response.ok) {
+      response.json().then(function (data) {
+        console.log(data);
+        var trackUri = data.tracks.items[0].uri;
+      });
+    } else {
+      alert("Error: " + response.statusText);
     }
-  })
-  const data = await result.json();
-  console.log(data);
-  showSearchResults(data);
-};
-
-function showSearchResults(data) {
-
+  });
 }
 
 
-
-
+window.onSpotifyIframeApiReady = (IFrameAPI) => {
+  const element = document.getElementById("embed-iframe");
+  const options = {
+    uri: "spotify:track:7FAFkQQZFeNwOFzTrSDFIh",
+  };
+  const callback = (EmbedController) => {};
+  IFrameAPI.createController(element, options, callback);
+};
