@@ -7,18 +7,22 @@
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+     rel="stylesheet" href="assets/js/assets.css"
+
     />
+    <link rel="stylesheet" href="assets/js/assets.css"/>
   </head>
-  <body class="body">
-    <h1>Spotitube (TITLE WIP)</h1>
+  <body class="body" class="columns is-desktop">
+    <h1 class="title is-1 has-background-danger-dark" class="column">Spotitube (TITLE WIP)</h1>
+    <img src="assets/js/Joe Logo.png" class="image is-128x128" class="column">
     <form id="search-form" class="form-inline mt-4">
       <input type="text" id="searchbar" placeholder="Search Here!" />
       <button type="submit" class="btn btn-primary">Search</button>
       <p>Choose a Platform</p>
       <input type="radio" id="youtube" name="platform" value="YouTube" />
-      <label for="youtube">YouTube</label><br />
+      <label Id=youtubeButton for="youtube" class="button has-background-danger-dark has-text-white">YouTube</label><br />
       <input type="radio" id="spotify" name="platform" value="Spotify" />
-      <label for="soundcloud">Spotify</label><br />
+      <label for="soundcloud" class="button has-background-success">Spotify</label><br />
     </form>
     <hr />
 
@@ -64,14 +68,16 @@
         </ul>
       </div>
     </div>
-
-    <div id="results">
+    <br>
+    <br>
+    <br>
+    <div id="results" class="color">
       <h2>Results:</h2>
     </div>
     <div class="modal" id="modal1">
       <div class="modal-background"></div>
       <div class="modal-content">
-        <h1 id="modalTitle"></h1>
+        <h1 id="modalTitle"></h1> 
         <p class= "image is-16by9">
           <iframe
             id="player"
