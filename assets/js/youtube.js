@@ -44,7 +44,7 @@ function saveSearch(input) {
   var capitalizeWord = firstLetterCap + remainingLetters;
   searchHistory.push(capitalizeWord);
 
-  if (searchHistory.length > 10) {
+  if (searchHistory.length > 5) {
     searchHistory.shift();
   }
 
