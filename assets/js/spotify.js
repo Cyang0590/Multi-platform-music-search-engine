@@ -73,17 +73,17 @@ async function retreiveKeyPlaylist(access_token, input) {
   const data = await result.json();
   console.log(data.tracks.items)
   displayResult(data);
-  console.log(data)
+  // console.log(data);
 };
 
 
 function displayResult(data) {
-
-    for (i = 0; i < 20; i++) {
+  for (i = 0; i <= 20; i++) {
+      console.log(data.tracks.items[i].artists[0].name);
       var artistName = data.tracks.items[i].artists[0].name;
       var trackName = data.tracks.items[i].name;
-      var trackImage = data.tracks.items[i].album.images[2].url
-      var trackUrl = data.tracks.items[i].external_urls.spotify
+      var trackImage = data.tracks.items[i].album.images[2].url;
+      var trackUrl = data.tracks.items[i].external_urls.spotify;
 
       // console.log(data.tracks.items[i].href)
 
