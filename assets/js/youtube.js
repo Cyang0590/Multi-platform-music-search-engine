@@ -19,15 +19,19 @@ searchForm.addEventListener("submit", (event) => {
     if (youtubeSelector.checked) {
       getSearchResults(searchQuery, selectedGenre);
       results.innerHTML = "";
+      searchInput.value = "";
     } else if (spotifySelector.checked) {
-      console.log("No YouTube Selected");
+
+      console.log("No youtube selected");
+      searchInput.value = "";
+   
+
     } else {
       document.getElementById("modal2").classList.add("is-active");
       errorText.textContent = "Please Select a Platform!";
     }
     saveSearch(searchQuery);
     displaySearchHistory();
-    searchInput.value = "";
   } else {
     document.getElementById("modal2").classList.add("is-active");
     errorText.textContent = "Please Enter a Valid Search!";
