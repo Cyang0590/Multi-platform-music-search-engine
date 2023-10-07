@@ -7,6 +7,7 @@ var selectElement = document.querySelector("select");
 var errorText = document.querySelector("#errorText");
 var youtubeSelector = document.querySelector("#youtube");
 var spotifySelector = document.querySelector("#spotify");
+var loadMore = document.querySelector("#loadMore");
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -113,6 +114,8 @@ async function getSearchResults(input, genre) {
   } else {
     document.getElementById("modal2").classList.add("is-active");
   }
+
+  
 }
 
 function showResults(data) {
@@ -209,6 +212,8 @@ function showResults(data) {
       }
     });
   });
+
+  loadMore.style.display = "block";
 }
 
 // Function to close the modal
