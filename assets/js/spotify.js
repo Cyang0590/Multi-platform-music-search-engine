@@ -9,8 +9,6 @@ var selectElement = document.querySelector("select");
 var clientId = "2383905db5474844bcb1768d0aa73893";
 var clientSecret = "798793c082c84d74a10e63bb7d6d604a";
 
-var searchHistory = localStorage.getItem("searchHistory");
-
 var Url = "https://accounts.spotify.com/api/token";
 
 searchFormEl.addEventListener("submit", (event) => {
@@ -27,7 +25,7 @@ searchFormEl.addEventListener("submit", (event) => {
       retreiveToken(searchQueryEl, selectedGenreData);
       resultsEl.innerHTML = "";
     } else if (youtubeSelectEl.checked) {
-      return;
+      console.log("No Spotify Selected");
     } else {
       document.getElementById("modal2").classList.add("is-active");
       errorText.textContent = "Please Select a Platform!";

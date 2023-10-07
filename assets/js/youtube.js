@@ -19,7 +19,7 @@ searchForm.addEventListener("submit", (event) => {
       getSearchResults(searchQuery, selectedGenre);
       results.innerHTML = "";
     } else if (spotifySelector.checked) {
-      return;
+      console.log("No YouTube Selected");
     } else {
       document.getElementById("modal2").classList.add("is-active");
       errorText.textContent = "Please Select a Platform!";
@@ -46,11 +46,21 @@ function saveSearch(input) {
     searchHistory.splice(existingSearchIndex, 1);
   }
 
-  var firstLetter = input.charAt(0);
-  var firstLetterCap = firstLetter.toUpperCase();
-  var remainingLetters = input.slice(1);
-  var capitalizeWord = firstLetterCap + remainingLetters;
-  searchHistory.push(capitalizeWord);
+  var words = input.split(" ");
+
+  for (var i = 0; i < words.length; i++) {
+    var word = words[i];
+    if (word) {
+      var firstLetter = word.charAt(0);
+      var firstLetterCap = firstLetter.toUpperCase();
+      var remainingLetters = word.slice(1);
+      var capitalizeWord = firstLetterCap + remainingLetters;
+      words[i] = capitalizeWord;
+    }
+  }
+
+  var capitalizedInput = words.join(" ");
+  searchHistory.push(capitalizedInput);
 
   if (searchHistory.length > 5) {
     searchHistory.shift();
