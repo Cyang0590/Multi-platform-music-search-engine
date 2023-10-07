@@ -19,3 +19,7 @@
 #loadMore {
   display: none;
 }
+
+#loader {
+  display: none;
+}

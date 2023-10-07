@@ -7,7 +7,6 @@ var selectElement = document.querySelector("select");
 var errorText = document.querySelector("#errorText");
 var youtubeSelector = document.querySelector("#youtube");
 var spotifySelector = document.querySelector("#spotify");
-var loadMore = document.querySelector("#loadMore");
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -21,11 +20,8 @@ searchForm.addEventListener("submit", (event) => {
       results.innerHTML = "";
       searchInput.value = "";
     } else if (spotifySelector.checked) {
-
       console.log("No youtube selected");
       searchInput.value = "";
-   
-
     } else {
       document.getElementById("modal2").classList.add("is-active");
       errorText.textContent = "Please Select a Platform!";
@@ -104,120 +100,185 @@ function displaySearchHistory() {
 }
 
 async function getSearchResults(input, genre) {
-  var apiUrl =
+  var nextPageToken = "";
+  var isLoading = false;
+  var loader = document.querySelector("#loader");
+  loader.style.display = "block";
+
+  async function fetchData(apiUrl) {
+    var response = await fetch(apiUrl);
+    if (response.status === 200) {
+      var data = await response.json();
+      return data;
+    } else {
+      document.getElementById("modal2").classList.add("is-active");
+    }
+  }
+
+  async function loadMoreResults() {
+    if (isLoading) {
+      return; // Don't load more if already loading
+    }
+
+    var nextPageApiUrl =
+      "https://www.googleapis.com/youtube/v3/search?q=" +
+      input +
+      "&part=snippet&type=video&maxResults=20&topicId=" +
+      genre +
+      "&key=AIzaSyCQJvOLH9jBWq_H_heswP8ew3OEFU99560" + // Replace with your actual API key
+      "&pageToken=" +
+      nextPageToken;
+
+    isLoading = true;
+
+    var nextPageData = await fetchData(nextPageApiUrl);
+    if (nextPageData) {
+      showResults(nextPageData);
+      nextPageToken = nextPageData.nextPageToken;
+      isLoading = false;
+    } else {
+      document.getElementById("modal2").classList.add("is-active");
+    }
+  }
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      const { scrollTop, scrollHeight, clientHeight } =
+        document.documentElement;
+
+      if (scrollTop + clientHeight >= scrollHeight - 3) {
+        loadMoreResults();
+      }
+    },
+    {
+      passive: true,
+    }
+  );
+
+  var loadMore = document.getElementById("loadMore"); // Replace with your actual button ID
+  loadMore.addEventListener("click", loadMoreResults);
+
+  // Initial fetch
+  var initialApiUrl =
     "https://www.googleapis.com/youtube/v3/search?q=" +
     input +
     "&part=snippet&type=video&maxResults=20&topicId=" +
     genre +
-    "&key=AIzaSyCQJvOLH9jBWq_H_heswP8ew3OEFU99560";
+    "&key=AIzaSyCQJvOLH9jBWq_H_heswP8ew3OEFU99560"; // Replace with your actual API key
 
-  var response = await fetch(apiUrl);
-  if (response.status === 200) {
-    var data = await response.json();
-    showResults(data);
+  var initialData = await fetchData(initialApiUrl);
+  if (initialData) {
+    showResults(initialData);
+    nextPageToken = initialData.nextPageToken;
   } else {
     document.getElementById("modal2").classList.add("is-active");
   }
 
-  
+  setTimeout(() => {
+    loader.style.display = "none";
+  }, 2000);
 }
 
 function showResults(data) {
-  data.items.forEach((searchResults) => {
-    var videoUrl =
-      "https://www.youtube.com/watch?v=" + searchResults.id.videoId;
-    var videoTitle = searchResults.snippet.title;
-    var videoDescription = searchResults.snippet.description;
-    var thumbnailUrl = searchResults.snippet.thumbnails.default.url;
-    var videoId = searchResults.id.videoId;
+  setTimeout(() => {
+    data.items.forEach((searchResults) => {
+      var videoUrl =
+        "https://www.youtube.com/watch?v=" + searchResults.id.videoId;
+      var videoTitle = searchResults.snippet.title;
+      var videoDescription = searchResults.snippet.description;
+      var thumbnailUrl = searchResults.snippet.thumbnails.default.url;
+      var videoId = searchResults.id.videoId;
 
-    var article = document.createElement("article");
-    article.classList.add("media");
-    article.style.cursor = "pointer";
+      var article = document.createElement("article");
+      article.classList.add("media");
+      article.style.cursor = "pointer";
 
-    var thumbnailEl = document.createElement("figure");
-    thumbnailEl.classList.add("media-left");
+      var thumbnailEl = document.createElement("figure");
+      thumbnailEl.classList.add("media-left");
 
-    var thumbnailImg = document.createElement("p");
-    thumbnailImg.classList.add("image", "is-flex", "is-align-items-center");
+      var thumbnailImg = document.createElement("p");
+      thumbnailImg.classList.add("image", "is-flex", "is-align-items-center");
 
-    var thumbnail = document.createElement("img");
-    thumbnail.setAttribute("src", thumbnailUrl);
-    thumbnail.style.height = "64px";
+      var thumbnail = document.createElement("img");
+      thumbnail.setAttribute("src", thumbnailUrl);
+      thumbnail.style.height = "64px";
 
-    var mediaContent = document.createElement("div");
-    mediaContent.classList.add("media-content");
+      var mediaContent = document.createElement("div");
+      mediaContent.classList.add("media-content");
 
-    var content = document.createElement("div");
-    content.classList.add("content", "is-flex");
+      var content = document.createElement("div");
+      content.classList.add("content", "is-flex");
 
-    var videoInfo = document.createElement("p");
-    videoInfo.classList.add("is-clipped", "is-size-6", "media-description");
-    videoInfo.innerHTML =
-      "<strong>" + videoTitle + "</strong>" + "<br />" + videoDescription;
+      var videoInfo = document.createElement("p");
+      videoInfo.classList.add("is-clipped", "is-size-6", "media-description");
+      videoInfo.innerHTML =
+        "<strong>" + videoTitle + "</strong>" + "<br />" + videoDescription;
 
-    results.appendChild(article);
+      results.appendChild(article);
 
-    article.appendChild(thumbnailEl);
-    thumbnailEl.appendChild(thumbnailImg);
-    thumbnailImg.appendChild(thumbnail);
+      article.appendChild(thumbnailEl);
+      thumbnailEl.appendChild(thumbnailImg);
+      thumbnailImg.appendChild(thumbnail);
 
-    article.appendChild(mediaContent);
-    mediaContent.appendChild(content);
-    content.appendChild(videoInfo);
+      article.appendChild(mediaContent);
+      mediaContent.appendChild(content);
+      content.appendChild(videoInfo);
 
-    article.addEventListener("click", function () {
-      document.getElementById("modal1").classList.add("is-active");
+      article.addEventListener("click", function () {
+        document.getElementById("modal1").classList.add("is-active");
 
-      var modalTitle = document.querySelector("#modalTitle");
-      modalTitle.innerHTML = videoTitle;
+        var modalTitle = document.querySelector("#modalTitle");
+        modalTitle.innerHTML = videoTitle;
 
-      var ytplayer = document.querySelector("#player");
-      ytplayer.setAttribute("src", "https://www.youtube.com/embed/" + videoId);
+        var ytplayer = document.querySelector("#player");
+        ytplayer.setAttribute(
+          "src",
+          "https://www.youtube.com/embed/" + videoId
+        );
 
-      var tag = document.createElement("script");
+        var tag = document.createElement("script");
 
-      tag.src = "https://www.youtube.com/iframe_api";
-      var firstScriptTag = document.getElementsByTagName("script")[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName("script")[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-      // 3. This function creates an <iframe> (and YouTube player)
-      //    after the API code downloads.
-      var player;
-      function onYouTubeIframeAPIReady() {
-        player = new YT.Player("player", {
-          playerVars: {
-            playsinline: 1,
-          },
-          events: {
-            onReady: onPlayerReady,
-            onStateChange: onPlayerStateChange,
-          },
-        });
-      }
-
-      // 4. The API will call this function when the video player is ready.
-      function onPlayerReady(event) {
-        event.target.playVideo();
-      }
-
-      // 5. The API calls this function when the player's state changes.
-      //    The function indicates that when playing a video (state=1),
-      //    the player should play for six seconds and then stop.
-      var done = false;
-      function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING && !done) {
-          setTimeout(stopVideo, 6000);
-          done = true;
+        // 3. This function creates an <iframe> (and YouTube player)
+        //    after the API code downloads.
+        var player;
+        function onYouTubeIframeAPIReady() {
+          player = new YT.Player("player", {
+            playerVars: {
+              playsinline: 1,
+            },
+            events: {
+              onReady: onPlayerReady,
+              onStateChange: onPlayerStateChange,
+            },
+          });
         }
-      }
-      function stopVideo() {
-        player.stopVideo();
-      }
-    });
-  });
 
-  loadMore.style.display = "block";
+        // 4. The API will call this function when the video player is ready.
+        function onPlayerReady(event) {
+          event.target.playVideo();
+        }
+
+        // 5. The API calls this function when the player's state changes.
+        //    The function indicates that when playing a video (state=1),
+        //    the player should play for six seconds and then stop.
+        var done = false;
+        function onPlayerStateChange(event) {
+          if (event.data == YT.PlayerState.PLAYING && !done) {
+            setTimeout(stopVideo, 6000);
+            done = true;
+          }
+        }
+        function stopVideo() {
+          player.stopVideo();
+        }
+      });
+    });
+  }, 2000);
 }
 
 // Function to close the modal
@@ -233,7 +294,7 @@ document
     ".modal-background, .modal-close, .modal-card-head.delete, .modal-card-foot.button"
   )
   .forEach(($el) => {
-    const $modal = $el.closest(".modal");
+    var $modal = $el.closest(".modal");
     $el.addEventListener("click", () => {
       // Remove the is-active class from the modal
       $modal.classList.remove("is-active");
@@ -242,7 +303,7 @@ document
 
 // Adding keyboard event listeners to close the modal
 document.addEventListener("keydown", (event) => {
-  const e = event || window.event;
+  var e = event || window.event;
   if (e.keyCode === 27) {
     // Using escape key
     closeModal();
