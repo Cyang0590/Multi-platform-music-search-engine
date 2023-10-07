@@ -46,11 +46,21 @@ function saveSearch(input) {
     searchHistory.splice(existingSearchIndex, 1);
   }
 
-  var firstLetter = input.charAt(0);
-  var firstLetterCap = firstLetter.toUpperCase();
-  var remainingLetters = input.slice(1);
-  var capitalizeWord = firstLetterCap + remainingLetters;
-  searchHistory.push(capitalizeWord);
+  var words = input.split(" ");
+
+  for (var i = 0; i < words.length; i++) {
+    var word = words[i];
+    if (word) {
+      var firstLetter = word.charAt(0);
+      var firstLetterCap = firstLetter.toUpperCase();
+      var remainingLetters = word.slice(1);
+      var capitalizeWord = firstLetterCap + remainingLetters;
+      words[i] = capitalizeWord;
+    }
+  }
+
+  var capitalizedInput = words.join(" "); // Join the words back together with spaces
+  searchHistory.push(capitalizedInput);
 
   if (searchHistory.length > 5) {
     searchHistory.shift();

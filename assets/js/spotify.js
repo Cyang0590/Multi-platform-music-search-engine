@@ -146,3 +146,26 @@ function displayResult(data) {
     });
   }
 }
+
+document.addEventListener("DOMContentLoaded", searchHistorySearch);
+
+function searchHistorySearch() {
+  var listItem = document.querySelectorAll("li");
+  listItem.forEach((searchItem) => {
+    searchItem.addEventListener("click", () => {
+      if (spotifySelectEl.checked) {
+        const selectedOption =
+          selectElement.options[selectElement.selectedIndex];
+        const selectedGenreData = selectedOption.getAttribute("data-genre");
+        retreiveToken(searchItem.textContent, selectedGenreData);
+        resultsEl.innerHTML = "";
+      } else if (youtubeSelector.checked) {
+        return;
+      } else {
+        document.getElementById("modal2").classList.add("is-active");
+        errorText.textContent = "Please Select a Platform!";
+      }
+      searchInput.value = "";
+    });
+  });
+}
