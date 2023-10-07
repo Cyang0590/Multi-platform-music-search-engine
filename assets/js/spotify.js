@@ -130,7 +130,6 @@ function displayResult(data) {
     article.appendChild(mediaContent);
     mediaContent.appendChild(content);
     content.appendChild(MusicInfo);
-    // content.appendChild(musicArtist);
 
     resultsEl.appendChild(article);
     article.appendChild(thumbnailEl);
