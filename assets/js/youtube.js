@@ -19,7 +19,7 @@ searchForm.addEventListener("submit", (event) => {
       getSearchResults(searchQuery, selectedGenre);
       results.innerHTML = "";
     } else if (spotifySelector.checked) {
-      console.log("No youtube selected");
+      console.log("No YouTube Selected");
     } else {
       document.getElementById("modal2").classList.add("is-active");
       errorText.textContent = "Please Select a Platform!";
@@ -28,7 +28,8 @@ searchForm.addEventListener("submit", (event) => {
     displaySearchHistory();
     searchInput.value = "";
   } else {
-    alert("Please enter a valid search!");
+    document.getElementById("modal2").classList.add("is-active");
+    errorText.textContent = "Please Enter a Valid Search!";
   }
 });
 
@@ -45,11 +46,21 @@ function saveSearch(input) {
     searchHistory.splice(existingSearchIndex, 1);
   }
 
-  var firstLetter = input.charAt(0);
-  var firstLetterCap = firstLetter.toUpperCase();
-  var remainingLetters = input.slice(1);
-  var capitalizeWord = firstLetterCap + remainingLetters;
-  searchHistory.push(capitalizeWord);
+  var words = input.split(" ");
+
+  for (var i = 0; i < words.length; i++) {
+    var word = words[i];
+    if (word) {
+      var firstLetter = word.charAt(0);
+      var firstLetterCap = firstLetter.toUpperCase();
+      var remainingLetters = word.slice(1);
+      var capitalizeWord = firstLetterCap + remainingLetters;
+      words[i] = capitalizeWord;
+    }
+  }
+
+  var capitalizedInput = words.join(" ");
+  searchHistory.push(capitalizedInput);
 
   if (searchHistory.length > 5) {
     searchHistory.shift();
@@ -121,18 +132,20 @@ function showResults(data) {
     thumbnailEl.classList.add("media-left");
 
     var thumbnailImg = document.createElement("p");
-    thumbnailImg.classList.add("image", "is-64x64");
+    thumbnailImg.classList.add("image", "is-flex", "is-align-items-center");
 
     var thumbnail = document.createElement("img");
     thumbnail.setAttribute("src", thumbnailUrl);
+    thumbnail.style.height = "64px";
 
     var mediaContent = document.createElement("div");
     mediaContent.classList.add("media-content");
 
     var content = document.createElement("div");
-    content.classList.add("content");
+    content.classList.add("content", "is-flex");
 
     var videoInfo = document.createElement("p");
+    videoInfo.classList.add("is-clipped", "is-size-6", "media-description");
     videoInfo.innerHTML =
       "<strong>" + videoTitle + "</strong>" + "<br />" + videoDescription;
 
