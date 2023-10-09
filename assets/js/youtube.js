@@ -7,6 +7,8 @@ var selectElement = document.querySelector("select");
 var errorText = document.querySelector("#errorText");
 var youtubeSelector = document.querySelector("#youtube");
 var spotifySelector = document.querySelector("#spotify");
+var loader = document.querySelector("#loader");
+var isLoadingYT = false;
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -101,8 +103,6 @@ function displaySearchHistory() {
 
 async function getSearchResults(input, genre) {
   var nextPageToken = "";
-  var isLoading = false;
-  var loader = document.querySelector("#loader");
   loader.style.display = "block";
 
   async function fetchData(apiUrl) {
@@ -116,7 +116,7 @@ async function getSearchResults(input, genre) {
   }
 
   async function loadMoreResults() {
-    if (isLoading) {
+    if (isLoadingYT) {
       return; // Don't load more if already loading
     }
 
@@ -129,13 +129,13 @@ async function getSearchResults(input, genre) {
       "&pageToken=" +
       nextPageToken;
 
-    isLoading = true;
+    isLoadingYT = true;
 
     var nextPageData = await fetchData(nextPageApiUrl);
     if (nextPageData) {
       showResults(nextPageData);
       nextPageToken = nextPageData.nextPageToken;
-      isLoading = false;
+      console.log("Made it to display");
     } else {
       document.getElementById("modal2").classList.add("is-active");
     }
@@ -147,7 +147,7 @@ async function getSearchResults(input, genre) {
       const { scrollTop, scrollHeight, clientHeight } =
         document.documentElement;
 
-      if (scrollTop + clientHeight >= scrollHeight - 3) {
+      if (scrollTop + clientHeight >= scrollHeight - 4) {
         loadMoreResults();
       }
     },
@@ -155,9 +155,6 @@ async function getSearchResults(input, genre) {
       passive: true,
     }
   );
-
-  var loadMore = document.getElementById("loadMore"); // Replace with your actual button ID
-  loadMore.addEventListener("click", loadMoreResults);
 
   // Initial fetch
   var initialApiUrl =
@@ -174,13 +171,10 @@ async function getSearchResults(input, genre) {
   } else {
     document.getElementById("modal2").classList.add("is-active");
   }
-
-  setTimeout(() => {
-    loader.style.display = "none";
-  }, 2000);
 }
 
 function showResults(data) {
+  loader.style.display = "block";
   setTimeout(() => {
     data.items.forEach((searchResults) => {
       var videoUrl =
@@ -278,7 +272,9 @@ function showResults(data) {
         }
       });
     });
-  }, 2000);
+    isLoadingYT = false;
+    loader.style.display = "none";
+  }, 1500);
 }
 
 // Function to close the modal
