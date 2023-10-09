@@ -135,7 +135,6 @@ async function getSearchResults(input, genre) {
     if (nextPageData) {
       showResults(nextPageData);
       nextPageToken = nextPageData.nextPageToken;
-      console.log("Made it to display");
     } else {
       document.getElementById("modal2").classList.add("is-active");
     }

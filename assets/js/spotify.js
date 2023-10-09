@@ -103,7 +103,6 @@ async function retreiveKeyPlaylist(access_token, input, genre) {
     if (nextPageData) {
       displayResult(nextPageData);
       nextPageLink = nextPageData.tracks.next;
-      console.log("Made it to display");
     } else {
       document.getElementById("modal2").classList.add("is-active");
     }
