@@ -23,3 +23,28 @@
 #loader {
   display: none;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap');
+
+body  {
+  font-family: 'Dela Gothic One', serif;
+  color: #000000;
+  text-align: center;
+  
+}
+
+
+#topPage {
+  background-image: linear-gradient(to right, #282828, #363636);
+}
+
+#topPage2 {
+  background-color: #282828;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  }
+
+  #topText {
+  font-size: 100px;
+  text-shadow: 2px 2px 8px #FFFFFF;
+  }
