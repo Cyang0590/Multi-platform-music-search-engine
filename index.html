@@ -11,17 +11,17 @@
     <link rel="stylesheet" href="assets/css/style.css" />
   </head>
   <body>
-    <nav class="navbar is-danger" role="navigation" aria-label="main navigation">
+    <nav Id=topPage class="navbar is-dark" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <div>
           <img src="assets/images/logo.png" class="image is-128x128" />
         </div>
         <div class="navbar-item">
-          <h1 class="title is-1 has-text-white">Spotitube (TITLE WIP)</h1>
-        </div>
+          <h1 ID="topText" class="title is-1 has-text-white"><span style="color:#1DB954;">Spoti</span><span style="color:#FF0000;">tube</span> </h1>
+          </div>
       </div>
     </nav>
-
+    <h2 Id="topPage2" class="title is-2 has-text-white is-size-3">Find what your looking for faster!! With <span style="color:#1DB954;">Spoti</span><span style="color:#FF0000;">tube</span>!!</h2>
     <div class="container mt-4">
       <div class="columns">
         <div class="column is-one-third">
@@ -36,24 +36,24 @@
                 />
               </div>
               <div class="control">
-                <button type="submit" class="button is-primary">Search</button>
+                <button type="submit" class="button is-dark">Search</button>
               </div>
             </div>
-            <div class="field mt-4">
-              <label class="label">Choose a Platform</label>
+            <div class="field mt-4" >
+              <label class="label is-size-3">Choose a Platform:</label>
               <div class="control">
                 <label for="youtube" class="checkbox-label checkbox button has-background-danger-dark has-text-white">
                   <input type="checkbox" id="youtube" name="platform" value="YouTube" />
                   YouTube
                 </label>
-                <label for="spotify" class="checkbox-label checkbox button has-background-success has-text-white">
+                <label for="spotify" class="checkbox-label checkbox button has-background-success has-text-white" >
                   <input type="checkbox" id="spotify" name="platform" value="Spotify" />
                   Spotify
                 </label>
               </div>
             </div>
             <div class="field mt-4">
-              <label class="label">Filter Genre</label>
+              <label class="label is-size-4">Filter Genre:</label>
               <div class="control">
                 <div class="select">
                   <div class="select">
@@ -82,9 +82,9 @@
         </div>
 
         <div class="column is-two-thirds">
-          <section class="menu">
-            <p class="menu-label">Search History</p>
-            <ul id="search-history" class="menu-list"></ul>
+          <section class="menu is-black">
+            <p class="menu-label is-size-4 is-black">Search History:</p>
+            <ul id="search-history" class="menu-list is-size-4 is-black"></ul>
           </section>
         </div>
       </div>
