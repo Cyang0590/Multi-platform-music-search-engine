@@ -112,7 +112,7 @@ async function retreiveKeyPlaylist(access_token, input, genre) {
     "scroll",
     () => {
       const { scrollTop, scrollHeight, clientHeight } =
-      document.documentElement;
+        document.documentElement;
 
       if (scrollTop + clientHeight >= scrollHeight - 4) {
         loadMore();
@@ -138,63 +138,92 @@ async function retreiveKeyPlaylist(access_token, input, genre) {
 
 function displayResult(data) {
   loader.style.display = "block";
-  setTimeout(() => {
-    for (i = 0; i < 20; i++) {
-      var artistName = data.tracks.items[i].artists[0].name;
-      var trackName = data.tracks.items[i].name;
-      var trackImage = data.tracks.items[i].album.images[2].url;
-      var trackUrl = data.tracks.items[i].external_urls.spotify;
-
-      // console.log(data.tracks.items[i].href)
-
-      var article = document.createElement("article");
-      article.classList.add("media");
-      article.style.cursor = "pointer";
-
-      var thumbnailEl = document.createElement("div");
-      thumbnailEl.classList.add("media-right");
-
-      var thumbnailImg = document.createElement("p");
-      thumbnailImg.classList.add("image", "is-64x64");
-
-      var thumbnail = document.createElement("img");
-      thumbnail.setAttribute("src", trackImage);
-
-      var mediaContent = document.createElement("div");
-      mediaContent.classList.add("media-content");
-
-      var content = document.createElement("div");
-      content.classList.add("content", "has-text-right");
-      // console.log(data.tracks.items[i].album.images[2])
-
-      var MusicInfo = document.createElement("p");
-      MusicInfo.classList.add("is-pulled-right", "media-description");
-
-      MusicInfo.innerHTML =
-        "<strong>" +
-        trackName +
-        "</strong>" +
-        "<br />" +
-        "<span class='is-align-items-end'>" +
-        artistName +
-        "</span>";
-
-      article.appendChild(mediaContent);
-      mediaContent.appendChild(content);
-      content.appendChild(MusicInfo);
-
-      resultsEl.appendChild(article);
-      article.appendChild(thumbnailEl);
-      thumbnailEl.appendChild(thumbnailImg);
-      thumbnailImg.appendChild(thumbnail);
-
-      article.addEventListener("click", function () {
-        console.log(trackUrl);
-
-        return (window.location.href = trackUrl);
-      });
-    }
-    isLoading = false;
+  if (data.tracks.items.length === 0) {
+    document.getElementById("modal2").classList.add("is-active");
+    errorText.textContent = "No Spotify Results Found!";
     loader.style.display = "none";
-  }, 1500);
+  } else {
+    setTimeout(() => {
+      for (i = 0; i < 20; i++) {
+        var artistName = data.tracks.items[i].artists[0].name;
+        var trackName = data.tracks.items[i].name;
+        var trackImage = data.tracks.items[i].album.images[2].url;
+        var trackUrl = data.tracks.items[i].external_urls.spotify;
+
+        // console.log(data.tracks.items[i].href)
+
+        var article = document.createElement("article");
+        article.classList.add("media");
+        article.style.cursor = "pointer";
+
+        var thumbnailEl = document.createElement("div");
+        thumbnailEl.classList.add("media-right");
+
+        var thumbnailImg = document.createElement("p");
+        thumbnailImg.classList.add("image", "is-64x64");
+
+        var thumbnail = document.createElement("img");
+        thumbnail.setAttribute("src", trackImage);
+
+        var mediaContent = document.createElement("div");
+        mediaContent.classList.add("media-content");
+
+        var content = document.createElement("div");
+        content.classList.add("content", "has-text-right");
+        // console.log(data.tracks.items[i].album.images[2])
+
+        var MusicInfo = document.createElement("p");
+        MusicInfo.classList.add("is-pulled-right", "media-description");
+
+        MusicInfo.innerHTML =
+          "<strong>" +
+          trackName +
+          "</strong>" +
+          "<br />" +
+          "<span class='is-align-items-end'>" +
+          artistName +
+          "</span>";
+
+        article.appendChild(mediaContent);
+        mediaContent.appendChild(content);
+        content.appendChild(MusicInfo);
+
+        resultsEl.appendChild(article);
+        article.appendChild(thumbnailEl);
+        thumbnailEl.appendChild(thumbnailImg);
+        thumbnailImg.appendChild(thumbnail);
+
+        article.addEventListener("click", function () {
+          console.log(trackUrl);
+
+          return (window.location.href = trackUrl);
+        });
+      }
+      isLoading = false;
+      loader.style.display = "none";
+    }, 1500);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", searchHistorySearch);
+
+function searchHistorySearch() {
+  var listItem = document.querySelectorAll("li");
+  listItem.forEach((searchItem) => {
+    searchItem.addEventListener("click", () => {
+      if (spotifySelectEl.checked) {
+        const selectedOption =
+          selectElement.options[selectElement.selectedIndex];
+        const selectedGenreData = selectedOption.getAttribute("data-genre");
+        retreiveToken(searchItem.textContent, selectedGenreData);
+        resultsEl.innerHTML = "";
+      } else if (youtubeSelector.checked) {
+        return;
+      } else {
+        document.getElementById("modal2").classList.add("is-active");
+        errorText.textContent = "Please Select a Platform!";
+      }
+      searchInput.value = "";
+    });
+  });
 }
