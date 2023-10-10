@@ -4,29 +4,43 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Spotitube</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@600&display=swap" rel="stylesheet">
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
     />
     <link rel="stylesheet" href="assets/css/style.css" />
   </head>
-  <body class="body">
-    <nav class="navbar is-danger" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
+  <body>
+    <nav class="navbar is-dark is-spaced" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand columns is-flex is-align-items-center">
         <div>
-          <img src="assets/images/logo.png" class="image is-128x128" />
+          <img src="assets/images/logo.png" width="128" height="128" />
         </div>
-        <a class="navbar-item" href="#">
-          <h1 class="title is-1 has-text-white">Spotitube (TITLE WIP)</h1>
-        </a>
+        <div class="column">
+          <div>
+            <p id="topText" class="title is-size-3-mobile"><span class="has-text-success">Spoti</span><span class="has-text-danger">tube</span> </p>
+          </div>
+          <div>
+            <p class="subtitle has-text-white is-size-5-mobile">Find what your looking for faster!! With <span class="has-text-success">Spoti</span><span class="has-text-danger">tube</span>!!</p>
+          </div>
+        </div>
       </div>
     </nav>
-
-    <div class="container mt-4">
+    <div class="container mt-4 has-text-centered">
+      <div class="notification is-danger is-light">
+        <button class="delete"></button>
+        <strong>NOTICE:</strong> If the YouTube API is not returning any videos and you are getting an error, the daily quota for api calls has been met! Thank you for using the site,
+        you will be able to search through YouTube again tomorrow :D
+      </div>
       <div class="columns">
-        <div class="column is-one-third">
+        <div class="column is-two-thirds">
           <form id="search-form">
-            <div class="field has-addons">
+            <label class="label is-size-3">Search any song or artist!</label>
+            <div class="column is-centered is-half is-offset-one-quarter">
+            <div class="field has-addons is-centered">
               <div class="control is-expanded">
                 <input
                   type="text"
@@ -36,24 +50,25 @@
                 />
               </div>
               <div class="control">
-                <button type="submit" class="button is-primary">Search</button>
+                <button type="submit" class="button is-dark">Search</button>
               </div>
             </div>
-            <div class="field mt-4">
-              <label class="label">Choose a Platform</label>
-              <div class="control">
-                <label for="youtube" class="checkbox-label checkbox button has-background-danger-dark has-text-white">
-                  <input type="checkbox" id="youtube" name="platform" value="YouTube" />
+            </div>
+            <div class="field mt-4" >
+              <label class="label is-size-3">Choose a Platform:</label>
+              <div class="control is-centered is-flex is-justify-content-center">
+                <label for="youtube" class="checkbox-label checkbox button has-background-danger-dark has-text-white is-flex is-align-items-center">
+                  <input type="checkbox" id="youtube" name="platform" value="YouTube" class="mr-2" />
                   YouTube
                 </label>
-                <label for="spotify" class="checkbox-label checkbox button has-background-success has-text-white">
-                  <input type="checkbox" id="spotify" name="platform" value="Spotify" />
+                <label for="spotify" class="checkbox-label checkbox button has-background-success has-text-white is-flex is-align-items-center" >
+                  <input type="checkbox" id="spotify" name="platform" value="Spotify" class="mr-2" />
                   Spotify
                 </label>
               </div>
             </div>
             <div class="field mt-4">
-              <label class="label">Filter Genre</label>
+              <label class="label is-size-4">Filter Genre:</label>
               <div class="control">
                 <div class="select">
                   <div class="select">
@@ -81,10 +96,10 @@
           </form>
         </div>
 
-        <div class="column is-two-thirds">
+        <div class="column is-one-third">
+          <label class="label is-size-3">Search History:</label>
           <section class="menu">
-            <p class="menu-label">Search History</p>
-            <ul id="search-history" class="menu-list"></ul>
+            <ul id="search-history" class="menu-list is-size-4"></ul>
           </section>
         </div>
       </div>
@@ -93,6 +108,11 @@
       <div class="columns">
           <div id="youtubeResults" class="column"></div>
           <div id="spotifyResults" class="column"></div>
+      </div>
+      <div class="columns">
+        <div class="column" id="loader">
+          <progress class="progress is-danger" max="100">30%</progress>
+        </div>
       </div>
     </div>
 
