@@ -19,6 +19,7 @@ searchForm.addEventListener("submit", (event) => {
   var searchQuery = searchInput.value.trim();
   var selectedGenre = selectElement.value;
 
+  // Checking if the user wants to search YouTube, and starting our call
   if (searchQuery) {
     if (youtubeSelector.checked) {
       getSearchResults(searchQuery, selectedGenre);
@@ -54,6 +55,7 @@ function saveSearch(input) {
 
   var words = input.split(" ");
 
+  // Handling capitalization
   for (var i = 0; i < words.length; i++) {
     var word = words[i];
     if (word) {
@@ -82,6 +84,7 @@ function displaySearchHistory() {
 
   searchHistorySection.innerHTML = "";
 
+  // Create our search history and allow the user to click to search again
   searchHistory.forEach((search) => {
     var listItem = document.createElement("li");
     listItem.classList.add("menu-list");
@@ -108,6 +111,7 @@ async function getSearchResults(input, genre) {
   var nextPageToken = "";
   loader.style.display = "block";
 
+  // Creating a function we can call any time to fetch our data
   async function fetchData(apiUrl) {
     var response = await fetch(apiUrl);
     if (response.status === 200) {
@@ -128,7 +132,7 @@ async function getSearchResults(input, genre) {
       input +
       "&part=snippet&type=video&maxResults=20&topicId=" +
       genre +
-      "&key=AIzaSyCQJvOLH9jBWq_H_heswP8ew3OEFU99560" + // Replace with your actual API key
+      "&key=AIzaSyCQJvOLH9jBWq_H_heswP8ew3OEFU99560" + 
       "&pageToken=" +
       nextPageToken;
 
@@ -143,6 +147,7 @@ async function getSearchResults(input, genre) {
     }
   }
 
+  // Infinite scroll wow
   window.addEventListener(
     "scroll",
     () => {
@@ -164,11 +169,12 @@ async function getSearchResults(input, genre) {
     input +
     "&part=snippet&type=video&maxResults=20&topicId=" +
     genre +
-    "&key=AIzaSyCQJvOLH9jBWq_H_heswP8ew3OEFU99560"; // Replace with your actual API key
+    "&key=AIzaSyCQJvOLH9jBWq_H_heswP8ew3OEFU99560";
 
   var initialData = await fetchData(initialApiUrl);
   if (initialData) {
     showResults(initialData);
+    // Grabbing the token we need to add to the url in loadMoreResults
     nextPageToken = initialData.nextPageToken;
   } else {
     document.getElementById("modal2").classList.add("is-active");
@@ -176,6 +182,7 @@ async function getSearchResults(input, genre) {
 }
 
 function showResults(data) {
+  // We need to wait here to give the user time to see the loading element
   loader.style.display = "block";
   setTimeout(() => {
     data.items.forEach((searchResults) => {
@@ -221,6 +228,7 @@ function showResults(data) {
       mediaContent.appendChild(content);
       content.appendChild(videoInfo);
 
+      // Handling the YouTube embed
       article.addEventListener("click", function () {
         document.getElementById("modal1").classList.add("is-active");
 
@@ -239,7 +247,7 @@ function showResults(data) {
         var firstScriptTag = document.getElementsByTagName("script")[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-        // 3. This function creates an <iframe> (and YouTube player)
+        //  This function creates an <iframe> (and YouTube player)
         //    after the API code downloads.
         var player;
         function onYouTubeIframeAPIReady() {
@@ -254,12 +262,12 @@ function showResults(data) {
           });
         }
 
-        // 4. The API will call this function when the video player is ready.
+        //  The API will call this function when the video player is ready.
         function onPlayerReady(event) {
           event.target.playVideo();
         }
 
-        // 5. The API calls this function when the player's state changes.
+        //  The API calls this function when the player's state changes.
         //    The function indicates that when playing a video (state=1),
         //    the player should play for six seconds and then stop.
         var done = false;
@@ -320,6 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 displaySearchHistory();
 
+// Handling dark mode
 toggle.addEventListener("click", () => {
     const bodyCheck = body.classList.contains('dark');
     if (bodyCheck) {
