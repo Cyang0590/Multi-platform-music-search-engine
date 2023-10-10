@@ -1,0 +1,69 @@
+@import "bulma/bulma.sass";
+
+html,
+body {
+  background-color: $light;
+  transition: all 0.4s ease;
+}
+
+strong {
+  color: $grey-darker;
+}
+
+// Some styling
+
+body .subtitle,
+body .title {
+  color: $dark;
+}
+
+html.dark,
+body.dark {
+  background-color: $dark;
+  color: $light;
+}
+
+body.dark .subtitle,
+body.dark .title,
+body.dark .label,
+body.dark li a,
+body.dark p,
+body.dark strong {
+  color: $light !important;
+}
+
+body.dark .modal-card-body {
+  background-color: $dark;
+}
+
+body.dark nav {
+    background-color: hsl(0, 0%, 14%);
+    background-image: none;
+}
+
+.section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  color: $light;
+  padding: 0.8rem;
+  background: $dark;
+  border-radius: 6px;
+  background-color: $dark;
+}
+
+body.dark button {
+  background: $light;
+  color: $dark;
+}
+
+hr {
+    border: 1px solid $grey-lighter;
+}

@@ -183,7 +183,7 @@ function displayResult(data) {
           trackName +
           "</strong>" +
           "<br />" +
-          "<span class='has-text-grey-dark'>" +
+          "<span>" +
           artistName +
           "</span>";
 
