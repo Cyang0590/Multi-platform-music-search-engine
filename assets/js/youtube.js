@@ -316,3 +316,18 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 displaySearchHistory();
+
+var html = document.querySelector("html");
+var body = document.querySelector('body');
+var toggle = document.getElementById('theme-switcher');
+
+toggle.addEventListener("click", () => {
+    const bodyCheck = body.classList.contains('dark');
+    if (bodyCheck) {
+        body.className = '';
+        html.className = '';
+    } else {
+        body.className = "dark";
+        html.className = "dark";
+  }
+})

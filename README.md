@@ -53,6 +53,10 @@ To view your search history, check the "Search History" section on the right sid
 
 To close modals or error messages, click the "Close" button, press the escape key, or click anywhere outside of the modal.
 
+### Screenshot
+
+![spotitube screenshot](assets/images/spotitubescreen.gif)
+
 ## Notice
 
 There is a 100 query search limit for the YouTube API, so please try to be conservative with your requests. If the quota has been reached, an error will appear on the screen if you try to search with YouTube checked. 
