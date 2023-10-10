@@ -11,6 +11,11 @@ var clientSecret = "798793c082c84d74a10e63bb7d6d604a";
 
 var Url = "https://accounts.spotify.com/api/token";
 
+
+var searchHistory = localStorage.getItem("searchHistory");
+
+
+
 searchFormEl.addEventListener("submit", (event) => {
   event.preventDefault();
 
@@ -36,6 +41,9 @@ searchFormEl.addEventListener("submit", (event) => {
   }
 });
 
+
+
+
 async function retreiveToken(input, genre) {
   const result = await fetch(Url, {
     method: "POST",
@@ -50,26 +58,19 @@ async function retreiveToken(input, genre) {
   });
   const data = await result.json();
   access_token = data.access_token;
-  // retreiveKeyGenres(access_token)
+
   retreiveKeyPlaylist(access_token, input, genre);
   console.log(access_token);
 }
 
-// async function retreiveKeyGenres(access_token) {
 
-//   const result = await fetch(`https://api.spotify.com/v1/browse/categories?` + searchInput, {
-//     method: "GET",
-//     headers: {
-//       Authorization: `Bearer ` + access_token
-
-//     }
-// })
-// const data = await result.json();
-// console.log(categories.items)
-// retreiveKeyPlaylist(data)
-// }
 
 async function retreiveKeyPlaylist(access_token, input, genre) {
+
+  var isLoading = false;
+  var loader = document.querySelector("#loader");
+  loader.style.display = "block";
+
   console.log(input);
   const result = await fetch(
     `https://api.spotify.com/v1/search?type=track,artist&q=` + input + genre,
@@ -84,16 +85,17 @@ async function retreiveKeyPlaylist(access_token, input, genre) {
   console.log(data.tracks.items);
   displayResult(data);
   console.log(data);
-}
+};
 
+
+
+// function for displaying the spotify section
 function displayResult(data) {
   for (i = 0; i < 20; i++) {
     var artistName = data.tracks.items[i].artists[0].name;
     var trackName = data.tracks.items[i].name;
     var trackImage = data.tracks.items[i].album.images[2].url;
     var trackUrl = data.tracks.items[i].external_urls.spotify;
-
-    // console.log(data.tracks.items[i].href)
 
     var article = document.createElement("article");
     article.classList.add("media");
