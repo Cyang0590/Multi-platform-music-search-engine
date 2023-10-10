@@ -337,14 +337,9 @@ if (localStorage.getItem("mode") == "dark") {
   darkMode();
 }
 
-function lightMode() {
-  localStorage.setItem("mode", "light");
-  body.className = "";
-  html.className = "";
-}
-
 function darkMode() {
   localStorage.setItem("mode", "dark");
+  toggle.checked = true;
   body.className = "dark";
   html.className = "dark";
 }
