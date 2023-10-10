@@ -157,7 +157,7 @@ function displayResult(data) {
 
       var article = document.createElement("a");
       article.href = trackUrl
-      article.classList.add("media", "has-text-black");
+      article.classList.add("media", "has-text-black",);
       article.style.cursor = "pointer";
 
 
@@ -227,3 +227,12 @@ function searchHistorySearch() {
   });
 
 }
+
+window.onSpotifyIframeApiReady = (IFrameAPI) => {
+  const element = document.getElementById('embed-iframe');
+  const options = {
+      uri: 'spotify:episode:7makk4oTQel546B0PZlDM5'
+    };
+  const callback = (EmbedController) => {};
+  IFrameAPI.createController(element, options, callback);
+};
