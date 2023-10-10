@@ -17,7 +17,7 @@ var Url = "https://accounts.spotify.com/api/token";
 var searchHistory = localStorage.getItem("searchHistory");
 
 
-
+// listen for the submit event (when the user press the search botton)
 searchFormEl.addEventListener("submit", (event) => {
   event.preventDefault();
 
@@ -27,6 +27,7 @@ searchFormEl.addEventListener("submit", (event) => {
   const selectedGenreData = selectedOption.getAttribute("data-genre");
   console.log(selectedGenreData);
 
+  // check user selection for the platform and genre
   if (searchQueryEl) {
     if (spotifySelectEl.checked) {
       retreiveToken(searchQueryEl, selectedGenreData);
@@ -45,7 +46,7 @@ searchFormEl.addEventListener("submit", (event) => {
 
 
 
-
+// function to restreive teh access token
 async function retreiveToken(input, genre) {
   const result = await fetch(Url, {
     method: "POST",
@@ -60,7 +61,7 @@ async function retreiveToken(input, genre) {
   });
   const data = await result.json();
   access_token = data.access_token;
-
+  // passing the access token to the retreiveKeyPlaylist function
   retreiveKeyPlaylist(access_token, input, genre);
   console.log(access_token);
 }
@@ -91,6 +92,7 @@ async function retreiveKeyPlaylist(access_token, input, genre) {
     }
   }
 
+  // the function that adds additional results to the page 
   async function loadMore() {
     if (isLoading) {
       return; // Don't load more if already loading
@@ -107,6 +109,7 @@ async function retreiveKeyPlaylist(access_token, input, genre) {
     }
   }
 
+  // additional result will be showed once the user scroll until the end of the list
   window.addEventListener(
     "scroll",
     () => {
@@ -143,6 +146,7 @@ function displayResult(data) {
     errorText.textContent = "No Spotify Results Found!";
     loader.style.display = "none";
   } else {
+    // adding setTimeout function to display the loading information
     setTimeout(() => {
       for (i = 0; i < 20; i++) {
         var artistName = data.tracks.items[i].artists[0].name;
@@ -204,10 +208,12 @@ function displayResult(data) {
 
 document.addEventListener("DOMContentLoaded", searchHistorySearch);
 
+// adding clickable search histories
 function searchHistorySearch() {
   var listItem = document.querySelectorAll("li");
   listItem.forEach((searchItem) => {
     searchItem.addEventListener("click", () => {
+      // checking to see if the spotify box is checked
       if (spotifySelectEl.checked) {
         const selectedOption =
           selectElement.options[selectElement.selectedIndex];
