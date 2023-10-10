@@ -30,3 +30,8 @@ body {
 #topText {
   font-size: 4rem;
 }
+
+a, a:hover, a:focus, a:active {
+  text-decoration: none;
+  color: inherit;
+}

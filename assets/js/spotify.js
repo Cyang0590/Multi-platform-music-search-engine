@@ -68,8 +68,6 @@ async function retreiveToken(input, genre) {
 
 
 async function retreiveKeyPlaylist(access_token, input, genre) {
-
-  var isLoading = false;
   var loader = document.querySelector("#loader");
   loader.style.display = "block";
 
@@ -157,7 +155,7 @@ function displayResult(data) {
 
       var article = document.createElement("a");
       article.href = trackUrl
-      article.classList.add("media", "has-text-black",);
+      article.classList.add("media");
       article.style.cursor = "pointer";
 
 
@@ -178,14 +176,14 @@ function displayResult(data) {
         // console.log(data.tracks.items[i].album.images[2])
 
         var MusicInfo = document.createElement("p");
-        MusicInfo.classList.add("is-pulled-right", "media-description");
+        MusicInfo.classList.add("media-description", "has-text-grey-darker");
 
         MusicInfo.innerHTML =
           "<strong>" +
           trackName +
           "</strong>" +
           "<br />" +
-          "<span class='is-align-items-end'>" +
+          "<span class='has-text-grey-dark'>" +
           artistName +
           "</span>";
 
@@ -217,7 +215,7 @@ function searchHistorySearch() {
         retreiveToken(searchItem.textContent, selectedGenreData);
         resultsEl.innerHTML = "";
       } else if (youtubeSelector.checked) {
-        return;
+        console.log("No spotify selected");
       } else {
         document.getElementById("modal2").classList.add("is-active");
         errorText.textContent = "Please Select a Platform!";
@@ -225,14 +223,4 @@ function searchHistorySearch() {
       searchInput.value = "";
     });
   });
-
 }
-
-window.onSpotifyIframeApiReady = (IFrameAPI) => {
-  const element = document.getElementById('embed-iframe');
-  const options = {
-      uri: 'spotify:episode:7makk4oTQel546B0PZlDM5'
-    };
-  const callback = (EmbedController) => {};
-  IFrameAPI.createController(element, options, callback);
-};
