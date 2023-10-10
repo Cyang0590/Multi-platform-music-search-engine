@@ -149,8 +149,9 @@ function displayResult(data) {
 
       // console.log(data.tracks.items[i].href)
 
-      var article = document.createElement("article");
-      article.classList.add("media");
+      var article = document.createElement("a");
+      article.href = trackUrl
+      article.classList.add("media", "has-text-black");
       article.style.cursor = "pointer";
 
       var thumbnailEl = document.createElement("div");
@@ -190,11 +191,11 @@ function displayResult(data) {
       thumbnailEl.appendChild(thumbnailImg);
       thumbnailImg.appendChild(thumbnail);
 
-      article.addEventListener("click", function () {
-        console.log(trackUrl);
+      // article.addEventListener("click", function () {
+      //   console.log(trackUrl);
 
-        return (window.location.href = trackUrl);
-      });
+      //   return (window.location.href = trackUrl);
+      // });
     }
     isLoading = false;
     loader.style.display = "none";
