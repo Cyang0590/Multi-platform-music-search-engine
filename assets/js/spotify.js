@@ -113,7 +113,7 @@ async function retreiveKeyPlaylist(access_token, input, genre) {
     "scroll",
     () => {
       const { scrollTop, scrollHeight, clientHeight } =
-      document.documentElement;
+        document.documentElement;
 
       if (scrollTop + clientHeight >= scrollHeight - 4) {
         loadMore();
@@ -140,64 +140,90 @@ async function retreiveKeyPlaylist(access_token, input, genre) {
 // function for displaying the spotify section
 function displayResult(data) {
   loader.style.display = "block";
-  setTimeout(() => {
-    for (i = 0; i < 20; i++) {
-      var artistName = data.tracks.items[i].artists[0].name;
-      var trackName = data.tracks.items[i].name;
-      var trackImage = data.tracks.items[i].album.images[2].url;
-      var trackUrl = data.tracks.items[i].external_urls.spotify;
+  if (data.tracks.items.length === 0) {
+    document.getElementById("modal2").classList.add("is-active");
+    errorText.textContent = "No Spotify Results Found!";
+    loader.style.display = "none";
+  } else {
+    setTimeout(() => {
+      for (i = 0; i < 20; i++) {
+        var artistName = data.tracks.items[i].artists[0].name;
+        var trackName = data.tracks.items[i].name;
+        var trackImage = data.tracks.items[i].album.images[2].url;
+        var trackUrl = data.tracks.items[i].external_urls.spotify;
 
-      // console.log(data.tracks.items[i].href)
+        // console.log(data.tracks.items[i].href)
+
 
       var article = document.createElement("a");
       article.href = trackUrl
       article.classList.add("media", "has-text-black");
       article.style.cursor = "pointer";
 
-      var thumbnailEl = document.createElement("div");
-      thumbnailEl.classList.add("media-right");
 
-      var thumbnailImg = document.createElement("p");
-      thumbnailImg.classList.add("image", "is-64x64");
+        var thumbnailEl = document.createElement("div");
+        thumbnailEl.classList.add("media-right");
 
-      var thumbnail = document.createElement("img");
-      thumbnail.setAttribute("src", trackImage);
+        var thumbnailImg = document.createElement("p");
+        thumbnailImg.classList.add("image", "is-64x64");
 
-      var mediaContent = document.createElement("div");
-      mediaContent.classList.add("media-content");
+        var thumbnail = document.createElement("img");
+        thumbnail.setAttribute("src", trackImage);
 
-      var content = document.createElement("div");
-      content.classList.add("content", "has-text-right");
-      // console.log(data.tracks.items[i].album.images[2])
+        var mediaContent = document.createElement("div");
+        mediaContent.classList.add("media-content");
 
-      var MusicInfo = document.createElement("p");
-      MusicInfo.classList.add("is-pulled-right", "media-description");
+        var content = document.createElement("div");
+        content.classList.add("content", "has-text-right");
+        // console.log(data.tracks.items[i].album.images[2])
 
-      MusicInfo.innerHTML =
-        "<strong>" +
-        trackName +
-        "</strong>" +
-        "<br />" +
-        "<span class='is-align-items-end'>" +
-        artistName +
-        "</span>";
+        var MusicInfo = document.createElement("p");
+        MusicInfo.classList.add("is-pulled-right", "media-description");
 
-      article.appendChild(mediaContent);
-      mediaContent.appendChild(content);
-      content.appendChild(MusicInfo);
+        MusicInfo.innerHTML =
+          "<strong>" +
+          trackName +
+          "</strong>" +
+          "<br />" +
+          "<span class='is-align-items-end'>" +
+          artistName +
+          "</span>";
 
-      resultsEl.appendChild(article);
-      article.appendChild(thumbnailEl);
-      thumbnailEl.appendChild(thumbnailImg);
-      thumbnailImg.appendChild(thumbnail);
+        article.appendChild(mediaContent);
+        mediaContent.appendChild(content);
+        content.appendChild(MusicInfo);
 
-      // article.addEventListener("click", function () {
-      //   console.log(trackUrl);
+        resultsEl.appendChild(article);
+        article.appendChild(thumbnailEl);
+        thumbnailEl.appendChild(thumbnailImg);
+        thumbnailImg.appendChild(thumbnail);
+      }
+      isLoading = false;
+      loader.style.display = "none";
+    }, 1500);
+  }
+}
 
-      //   return (window.location.href = trackUrl);
-      // });
-    }
-    isLoading = false;
-    loader.style.display = "none";
-  }, 1500);
+document.addEventListener("DOMContentLoaded", searchHistorySearch);
+
+function searchHistorySearch() {
+  var listItem = document.querySelectorAll("li");
+  listItem.forEach((searchItem) => {
+    searchItem.addEventListener("click", () => {
+      if (spotifySelectEl.checked) {
+        const selectedOption =
+          selectElement.options[selectElement.selectedIndex];
+        const selectedGenreData = selectedOption.getAttribute("data-genre");
+        retreiveToken(searchItem.textContent, selectedGenreData);
+        resultsEl.innerHTML = "";
+      } else if (youtubeSelector.checked) {
+        return;
+      } else {
+        document.getElementById("modal2").classList.add("is-active");
+        errorText.textContent = "Please Select a Platform!";
+      }
+      searchInput.value = "";
+    });
+  });
+
 }
