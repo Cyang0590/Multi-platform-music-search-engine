@@ -52,17 +52,12 @@ body.dark nav {
 button {
   cursor: pointer;
   border: none;
-  color: $light;
   padding: 0.8rem;
   background: $dark;
   border-radius: 6px;
   background-color: $dark;
 }
 
-body.dark button {
-  background: $light;
-  color: $dark;
-}
 
 hr {
     border: 1px solid $grey-lighter;
