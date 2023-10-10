@@ -176,14 +176,14 @@ function displayResult(data) {
         // console.log(data.tracks.items[i].album.images[2])
 
         var MusicInfo = document.createElement("p");
-        MusicInfo.classList.add("media-description");
+        MusicInfo.classList.add("media-description", "has-text-grey-darker");
 
         MusicInfo.innerHTML =
           "<strong>" +
           trackName +
           "</strong>" +
           "<br />" +
-          "<span class='is-align-items-end'>" +
+          "<span class='has-text-grey-dark'>" +
           artistName +
           "</span>";
 
