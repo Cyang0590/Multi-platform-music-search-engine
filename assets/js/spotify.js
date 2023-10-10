@@ -13,6 +13,11 @@ var clientSecret = "798793c082c84d74a10e63bb7d6d604a";
 
 var Url = "https://accounts.spotify.com/api/token";
 
+
+var searchHistory = localStorage.getItem("searchHistory");
+
+
+
 searchFormEl.addEventListener("submit", (event) => {
   event.preventDefault();
 
@@ -38,6 +43,9 @@ searchFormEl.addEventListener("submit", (event) => {
   }
 });
 
+
+
+
 async function retreiveToken(input, genre) {
   const result = await fetch(Url, {
     method: "POST",
@@ -52,26 +60,19 @@ async function retreiveToken(input, genre) {
   });
   const data = await result.json();
   access_token = data.access_token;
-  // retreiveKeyGenres(access_token)
+
   retreiveKeyPlaylist(access_token, input, genre);
   console.log(access_token);
 }
 
-// async function retreiveKeyGenres(access_token) {
 
-//   const result = await fetch(`https://api.spotify.com/v1/browse/categories?` + searchInput, {
-//     method: "GET",
-//     headers: {
-//       Authorization: `Bearer ` + access_token
-
-//     }
-// })
-// const data = await result.json();
-// console.log(categories.items)
-// retreiveKeyPlaylist(data)
-// }
 
 async function retreiveKeyPlaylist(access_token, input, genre) {
+
+  var isLoading = false;
+  var loader = document.querySelector("#loader");
+  loader.style.display = "block";
+
   console.log(input);
   var nextPageLink = "";
   loader.style.display = "block";
@@ -136,6 +137,7 @@ async function retreiveKeyPlaylist(access_token, input, genre) {
   }
 }
 
+// function for displaying the spotify section
 function displayResult(data) {
   loader.style.display = "block";
   if (data.tracks.items.length === 0) {
@@ -152,9 +154,12 @@ function displayResult(data) {
 
         // console.log(data.tracks.items[i].href)
 
-        var article = document.createElement("article");
-        article.classList.add("media");
-        article.style.cursor = "pointer";
+
+      var article = document.createElement("a");
+      article.href = trackUrl
+      article.classList.add("media", "has-text-black");
+      article.style.cursor = "pointer";
+
 
         var thumbnailEl = document.createElement("div");
         thumbnailEl.classList.add("media-right");
@@ -192,12 +197,6 @@ function displayResult(data) {
         article.appendChild(thumbnailEl);
         thumbnailEl.appendChild(thumbnailImg);
         thumbnailImg.appendChild(thumbnail);
-
-        article.addEventListener("click", function () {
-          console.log(trackUrl);
-
-          return (window.location.href = trackUrl);
-        });
       }
       isLoading = false;
       loader.style.display = "none";
@@ -226,4 +225,5 @@ function searchHistorySearch() {
       searchInput.value = "";
     });
   });
+
 }
