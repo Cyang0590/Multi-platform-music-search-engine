@@ -8,6 +8,9 @@ var errorText = document.querySelector("#errorText");
 var youtubeSelector = document.querySelector("#youtube");
 var spotifySelector = document.querySelector("#spotify");
 var loader = document.querySelector("#loader");
+var html = document.querySelector("html");
+var body = document.querySelector('body');
+var toggle = document.getElementById('theme-switcher');
 var isLoadingYT = false;
 
 searchForm.addEventListener("submit", (event) => {
@@ -317,17 +320,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
 displaySearchHistory();
 
-var html = document.querySelector("html");
-var body = document.querySelector('body');
-var toggle = document.getElementById('theme-switcher');
-
 toggle.addEventListener("click", () => {
     const bodyCheck = body.classList.contains('dark');
     if (bodyCheck) {
         body.className = '';
         html.className = '';
+        localStorage.removeItem("mode");
     } else {
+        localStorage.setItem("mode", "dark");
         body.className = "dark";
         html.className = "dark";
   }
 })
+
+if (localStorage.getItem("mode") == "dark") {
+  darkMode();
+}
+
+function lightMode() {
+  localStorage.setItem("mode", "light");
+  body.className = "";
+  html.className = "";
+}
+
+function darkMode() {
+  localStorage.setItem("mode", "dark");
+  body.className = "dark";
+  html.className = "dark";
+}
